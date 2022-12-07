@@ -1,1 +1,1 @@
-# Nausica-s-Global-Green-Initiative
+# Nausicaas-Global-Green-Initiative
