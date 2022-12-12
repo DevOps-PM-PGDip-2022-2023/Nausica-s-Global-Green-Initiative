@@ -9,13 +9,13 @@ Rotating scrum master so that everyone gets to experience the role once.
 <<List name>> (Permanent)
 
 # Rockstars
-Aidan Corley
-Anauradha Goli
-Dean Moore
-Goran Kraljic
-Julian Fitzsimons
-Kehinde Awoniran
-Samantha Toner
+- Aidan Corley
+- Anauradha Goli
+- Dean Moore
+- Goran Kraljic
+- Julian Fitzsimons
+- Kehinde Awoniran
+- Samantha Toner
 
 # Project Deadline
 Refer to BB for deadlines
