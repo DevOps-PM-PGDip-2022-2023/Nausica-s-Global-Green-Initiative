@@ -9,8 +9,13 @@ Rotating scrum master so that everyone gets to experience the role once.
 <<List name>> (Permanent)
 
 # Rockstars
-<<list team member names here>>
-
+Aidan Corley
+Anauradha Goli
+Dean Moore
+Goran Kraljic
+Julian Fitzsimons
+Kehinde Awoniran
+Samantha Toner
 
 # Project Deadline
 Refer to BB for deadlines
@@ -30,7 +35,7 @@ Regex for cleansing and validation of data before sending to the database.
 
 # Useful Links
  - Project Slack: https://atudevops.slack.com
- - GitHub: <<staff member's github repo for the student project>>
+ - GitHub: https://github.com/DevOps-PM-PGDip-2022-2023/Nausicaas-Global-Green-Initiative
 
 # More Information
 For more information visit our other sections
