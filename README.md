@@ -10,7 +10,7 @@ Rotating scrum master so that everyone gets to experience the role once.
 
 # Rockstars
 - Aidan Corley
-- Anauradha Goli
+- Anuradha Goli
 - Dean Moore
 - Goran Kraljic
 - Julian Fitzsimons
@@ -18,7 +18,7 @@ Rotating scrum master so that everyone gets to experience the role once.
 - Samantha Toner
 
 # Project Deadline
-Refer to BB for deadlines
+23 March 2023
 
 # Project Specification
 Clean and simple design
