@@ -34,7 +34,7 @@ Named queries and database triggers for security
 Regex for cleansing and validation of data before sending to the database.
 
 # Useful Links
- - Project Slack: https://atudevops.slack.com
+ - Project Slack: https://atudevops.slack.com/archives/C04ETS0CLJV
  - GitHub: https://github.com/DevOps-PM-PGDip-2022-2023/Nausicaas-Global-Green-Initiative
 
 # More Information
@@ -55,6 +55,8 @@ Project Log	Team log for the project
 
 # Risk Register
 These are the current Risks on the project, re-aligned on a weekly basis
+Team Members leaving the Course
+Team Members Unavailable due to sickness or other commitments
 
 
 # Tenants of Design
@@ -66,7 +68,12 @@ The code framework to be used will be <<>>, we will be programming using the IDE
 - <<>>.
 
 # Testing:
-    
+Identify the Requirements and confirm they are Testable
+Boundary Analysis Tests 
+Test Case for Teto – Valid 1 to 10000 Invalid 0,-1, 10001 –
+Ensure admin can edit details –
+Ensure users that are not admin cannot edit details –
+Ensure grant applicant cannot change details once submitted(Add a message prompt to the application once the submit button is pressed to confirm
     
 # Environments:
     staging and production
@@ -144,8 +151,20 @@ Our branching stategy will start with gh then the issue number followed by wip
 
 # Estimating Story Points
 The teams team's velocity is calculated by <<Team decides>>.
+The Team is familiar with estimating 
 
 The teams current story point velocity is "N/A".
+Velocity will be useful if team members remain the same or as close to the same as possible throughout the Project
 
 # Definition of Ready
 <<List criteria that are common here>>
+User Story created
+Acceptance Criteria created
+Estimated
+3 Amigos between BA/Test/Dev
+
+# Definition of Done
+Acceptance Criteria delivered and confirmed
+Demoed to the Customer
+Signed Off by the Customer
+Signed Off by the Customer
