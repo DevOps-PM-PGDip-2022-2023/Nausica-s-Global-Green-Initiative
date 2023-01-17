@@ -19,7 +19,7 @@ def register_user(username = None, password = None):
 
 def patch_user(username = None, password = None):
     resp = ""
-    resp = posts.find_one({"Name": username})
+    resp = users.find_one({"Name": username})
     if resp == "":
         register_user(username,password)
     else:
@@ -47,7 +47,7 @@ def add_grant(name = None, ammount = None):
 
 def patch_(name = None, ammount = None):
     resp = ""
-    resp = posts.find_one({"Name": name})
+    resp = grants.find_one({"Name": name})
     if resp == "":
         add_grant(name,ammount)
     else:
