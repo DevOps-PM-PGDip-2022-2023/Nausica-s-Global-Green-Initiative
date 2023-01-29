@@ -2,11 +2,10 @@
 # Table of Contents
 
 # Scrum Master
-<<list week number, student name>>
-Rotating scrum master so that everyone gets to experience the role once.
+Week 1 and 2 so far Dean has taken this on - We do plan to rotate to give everyone the opportunity  Rotating scrum master so that everyone gets to experience the role once.
 
 # Product Owner
-<<List name>> (Permanent)
+Pauric Dawson
 
 # Rockstars
 - Aidan Corley
@@ -16,6 +15,7 @@ Rotating scrum master so that everyone gets to experience the role once.
 - Julian Fitzsimons
 - Kehinde Awoniran
 - Samantha Toner
+- Rotimi Awoniran
 
 # Project Deadline
 23 March 2023
