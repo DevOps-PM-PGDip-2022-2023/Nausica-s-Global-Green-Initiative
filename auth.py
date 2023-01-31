@@ -8,7 +8,8 @@ users = db.users
 
 def search(username = None, password = None):
     resp = ""
-    resp = users.find_one({"Name": username})
+    # resp = users.find_one({"Name": username})
+    resp = {"Name":username, "Password":password}
     if resp == "":
         return False
     

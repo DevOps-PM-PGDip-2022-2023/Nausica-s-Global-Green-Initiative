@@ -11,7 +11,7 @@ grants = db.grants
 
 def register_user(username = None, password = None):
     data = {
-        "Name": str(username)
+        "Name": str(username),
         "Password": str(password)
     }
     users.insert_one(data).inserted_id
@@ -29,17 +29,17 @@ def patch_user(username = None, password = None):
 
 def remove_user(username = None, password = None):
     data = {
-        "Name": str(username)
+        "Name": str(username),
         "Password": str(password)
     }
-    users.delete_one(myquery)
+    users.delete_one(data)
 
 
 #todo: add,remove,update grants method 
 
 def add_grant(name = None, ammount = None):
     data = {
-        "Name": str(name)
+        "Name": str(name),
         "Ammount": str(ammount)
     }
     grants.insert_one(data).inserted_id
@@ -57,7 +57,7 @@ def patch_(name = None, ammount = None):
 
 def remove_(name = None, ammount = None):
     data = {
-        "Name": str(name)
+        "Name": str(name),
         "Ammount": str(ammount)
     }
     grants.delete_one(myquery)
