@@ -18,7 +18,17 @@ def main():
         return redirect("/login")
     return render_template('index.html')
 
+@app.route("/team")
+def main():
+    if not session.get("name"):
+        return redirect("/login")
+    return render_template('Teamdetails.html')
 
+@app.route("/customer")
+def main():
+    if not session.get("name"):
+        return redirect("/login")
+    return render_template('CustomerDetails.html')
 
 
 
