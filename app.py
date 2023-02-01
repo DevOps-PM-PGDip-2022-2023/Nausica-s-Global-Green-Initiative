@@ -19,13 +19,13 @@ def main():
     return render_template('index.html')
 
 @app.route("/team")
-def main():
+def team():
     if not session.get("name"):
         return redirect("/login")
     return render_template('Teamdetails.html')
 
 @app.route("/customer")
-def main():
+def customer():
     if not session.get("name"):
         return redirect("/login")
     return render_template('CustomerDetails.html')
