@@ -11,8 +11,8 @@ Pauric Dawson
 - Aidan Corley
 - Anuradha Goli
 - Dean Moore
-- Goran Kraljic
-- Julian Fitzsimons
+- Goran Kraljic(withdrew)
+- Julian Fitzsimons(No Input)
 - Kehinde Awoniran
 - Samantha Toner
 - Rotimi Awoniran
@@ -73,7 +73,8 @@ Boundary Analysis Tests
 Test Case for Teto – Valid 1 to 10000 Invalid 0,-1, 10001 –
 Ensure admin can edit details –
 Ensure users that are not admin cannot edit details –
-Ensure grant applicant cannot change details once submitted(Add a message prompt to the application once the submit button is pressed to confirm
+Ensure grant applicant cannot change details once submitted
+Selenium is planned to be used for automated testing
     
 # Environments:
     staging and production
@@ -86,6 +87,9 @@ Ensure grant applicant cannot change details once submitted(Add a message prompt
     version/release management
 
 # Agile project management methods/principles (jira)
+JIRA Project and Kanban Board https://l00177576-devops.atlassian.net/jira/software/projects/GGI/boards/3
+Confluence Page https://l00177576-devops.atlassian.net/wiki/spaces/SD/overview?homepageId=229464
+Sprint Retros available (https://easyretro.io/publicboard/4dbxdGABPHeYondyMoldWXrgJRP2/e910232b-de78-41bb-8e6e-fa662582aa68)
 
 # Social Contract
     Mobile phones be left on silent during sprint sessions and class time.
@@ -101,8 +105,8 @@ Ensure grant applicant cannot change details once submitted(Add a message prompt
     Use Agile methodoligies in the project at all times.
 
 # Meetings
-Stand-ups will occur on Every <<day/time>> during class and <<day/time>> using Automated bot. Two per week.
-The order that people give their updates will be << >>.
+Stand-ups will occur on Every Tue at the end of class and Thursday at 6:30. Two per week.
+The order that people give their updates will be decided by Scrum Master.
 Updates will be in the form: What I've done, Impediments, What I plan to do.
 Sprint planning will occur at <<date/time>> every week.
 Please add and update items within <<issue management tool>> a prior to the sprint planning session.
