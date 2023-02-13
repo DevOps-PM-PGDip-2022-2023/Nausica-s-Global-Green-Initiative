@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, session
 from flask_session import Session
-from auth import search
+from auth import search, getrole
 from db_methods import *
 
 
@@ -40,7 +40,7 @@ def login():
         password =  request.form.get("password")
         if search(username, password):
             session["name"] = username
-            session["name"] = getrole(username)
+            session["role"] = getrole(username, password)
             return redirect("/")
         else:
             return redirect("/login")
