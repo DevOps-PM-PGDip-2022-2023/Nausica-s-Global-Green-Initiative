@@ -1,63 +1,77 @@
-from pymongo import MongoClient
 
-client = MongoClient('localhost', 27017)
+import psycopg2
 
-db = client.GGI
+#change connection info
+conn = psycopg2.connect(
+    host="localhost",
+    database="suppliers",
+    user="postgres",
+    password="Abcd1234")
 
-users = db.users
-grants = db.grants
 
-#todo: add,remove,update users method 
 
 def register_user(username = None, password = None):
-    data = {
-        "Name": str(username),
-        "Password": str(password)
-    }
-    users.insert_one(data).inserted_id
+    cur = conn.cursor()
+    insert_stmt = (
+    "INSERT INTO users (email, password, role) "
+    "VALUES (%s, %s, %s)"
+    )
+    data = (username, password, "user")
+    cur.execute(insert_stmt, data)
 
 
-def patch_user(username = None, password = None):
-    resp = ""
-    resp = users.find_one({"Name": username})
-    if resp == "":
+def patch_user(username = None, password = None, newuser = None, newpass = None):
+    cur = conn.cursor()
+    sql = "SELECT * FROM users WHERE email = %s"
+    adr = (username, )
+    cur.execute(sql, adr)
+    if len(cur.fetchall()) == 0:
         register_user(username,password)
     else:
-        filter = { 'Name': username }
-        newvalues = { "$set": { 'Name': username,'Password': password} }
-        users.update_one(filter, newvalues)
+        sql = "UPDATE users SET email = %s WHERE email = %s"
+        val = (newuser, username)
+        cur.execute(sql, val)
 
 def remove_user(username = None, password = None):
-    data = {
-        "Name": str(username),
-        "Password": str(password)
-    }
-    users.delete_one(data)
+    cur = conn.cursor()
+    sql = "DELETE FROM users WHERE name = %s"
+    adr = (username, )
+    cur.execute(sql, val)
 
 
 #todo: add,remove,update grants method 
 
 def add_grant(name = None, ammount = None):
-    data = {
-        "Name": str(name),
-        "Ammount": str(ammount)
-    }
-    grants.insert_one(data).inserted_id
+    cur = conn.cursor()
+    insert_stmt = (
+    "INSERT INTO grants (name, ammount) "
+    "VALUES (%s, %s)"
+    )
+    data = (name, ammount)
+    cur.execute(insert_stmt, data)
     
 
-def patch_(name = None, ammount = None):
-    resp = ""
-    resp = grants.find_one({"Name": name})
-    if resp == "":
-        add_grant(name,ammount)
+def patch_grant(name = None, ammount = None, newname = None, newammount = None):
+    cur = conn.cursor()
+    sql = "SELECT * FROM grants WHERE name = %s"
+    adr = (username, )
+    cur.execute(sql, adr)
+    if len(cur.fetchall()) == 0:
+        register_user(username,password)
     else:
-        filter = { 'Name': name }
-        newvalues = { "$set": { 'Name': name,'Ammount': ammount} }
-        grants.update_one(filter, newvalues)
+        sql = "UPDATE grants SET name = %s WHERE name = %s"
+        val = (newuser, username)
+        cur.execute(sql, val)
 
-def remove_(name = None, ammount = None):
-    data = {
-        "Name": str(name),
-        "Ammount": str(ammount)
-    }
-    grants.delete_one(myquery)
+def remove_grant(name = None, ammount = None):
+    cur = conn.cursor()
+    sql = "DELETE FROM grants WHERE name = %s"
+    adr = (username, )
+    cur.execute(sql, val)
+
+
+def getall_grants()
+    cur = conn.cursor()
+    sql = "SELECT * FROM grants
+    cur.execute(sql)
+    return cur.fetchall()
