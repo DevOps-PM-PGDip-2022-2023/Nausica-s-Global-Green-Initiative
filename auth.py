@@ -1,24 +1,23 @@
-from pymongo import MongoClient
-
-client = MongoClient('localhost', 27017)
-
-db = client.GGI
-
-users = db.users
+import psycopg2
 
 def search(username = None, password = None):
-    resp = ""
-    # resp = users.find_one({"Name": username})
-    resp = {"Name":username, "Password":password}
-    if resp == "":
-        return False
-    
+    cur = conn.cursor()
+    sql = "SELECT * FROM users WHERE email = %s"
+    adr = (username, )
+    cur.execute(sql, adr)
+    if len(cur.fetchall()) == 0:
+        return True
     else:
-        try:
-            if resp['Name'] == username and resp['Password'] == password:
-                return True
-            else:
-                return False
-        except:
-            return False
+        return False
+
+def getrole(username = None, password = None):
+    cur = conn.cursor()
+    sql = "SELECT role FROM users WHERE email = %s"
+    adr = (username, )
+    cur.execute(sql, adr)
+    resp = cur.fetchall()
+    if len(resp)>1:
+        return "user"
+    else:
+        return str(resp[0])
 
