@@ -1,10 +1,4 @@
-from pymongo import MongoClient
-
-client = MongoClient('localhost', 27017)
-
-db = client.GGI
-
-users = db.users
+import psycopg2
 
 def search(username = None, password = None):
     resp = ""
