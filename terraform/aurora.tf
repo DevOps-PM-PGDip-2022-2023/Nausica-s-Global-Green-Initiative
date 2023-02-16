@@ -52,7 +52,6 @@ resource "aws_rds_cluster_instance" "aurora_cluster_instance" {
 
 }
 
-<<<<<<< HEAD
 resource "aws_db_security_group" "aurora_sg" {
   name = "GreenGiants_sg"
   description = "Security group used for aurora database"
@@ -67,8 +66,6 @@ resource "aws_db_security_group" "aurora_sg" {
   }
 }
 
-=======
->>>>>>> main
 #resource "aws_db_subnet_group" "aurora_subnet_group" {
 
 #    name          = "${var.environment_name}_aurora_db_subnet_group"
