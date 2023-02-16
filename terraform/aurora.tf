@@ -52,6 +52,20 @@ resource "aws_rds_cluster_instance" "aurora_cluster_instance" {
 
 }
 
+resource "aws_db_security_group" "aurora_sg" {
+  name = "GreenGiants_sg"
+  description = "Security group used for aurora database"
+
+   ingress {
+    from_port        = 0
+    to_port          = 3306
+    protocol         = "TCP"
+    security_group_id = data.aws_security_group.ec2_sg.id
+  }
+
+  }
+}
+
 #resource "aws_db_subnet_group" "aurora_subnet_group" {
 
 #    name          = "${var.environment_name}_aurora_db_subnet_group"
