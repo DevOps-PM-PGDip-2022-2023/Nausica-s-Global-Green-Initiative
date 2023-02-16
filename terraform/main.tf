@@ -4,7 +4,7 @@ resource "aws_instance" "ec2_instance" {
     instance_type = "${var.instance_type}"
 }
 
-<<<<<<< HEAD
+
 resource "aws_security_group" "ec2_sg" {
   name        = "GreenGiants_ec2_sg"
   description = "Security group created for EC2 security group - managed by terraform"
@@ -17,8 +17,6 @@ resource "aws_security_group" "ec2_sg" {
   }
 }
 
-=======
->>>>>>> main
 ######### To do ###########
 #add name
 #add security group with ingress rules 
