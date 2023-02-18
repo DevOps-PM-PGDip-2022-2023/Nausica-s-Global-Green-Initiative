@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -60,16 +59,16 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">First name</label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                <input type="text" class="form-control" id="firstName" placeholder="" value=""  pattern="[A-Za-z]+" minlength="1" maxlength="30" required>
                 <div class="invalid-feedback">
-                  Valid first name is required.
+                  Enter valid first name with 1-30 Alpha characters.
                 </div>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="lastName">Last name</label>
-                <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                <input type="text" class="form-control" id="lastName" placeholder="" value="" pattern="[A-Za-z]+" minlength="1" maxlength="30" required>
                 <div class="invalid-feedback">
-                  Valid last name is required.
+                  Enter valid last name with 1-30 Alpha characters.
                 </div>
               </div>
             </div>
@@ -80,24 +79,24 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text">@</span>
                 </div>
-                <input type="text" class="form-control" id="username" placeholder="Username" required>
+                <input type="text" class="form-control" id="username" placeholder="Username" pattern="[A-Za-z0-9]+" minlength="1" maxlength="30" required>
                 <div class="invalid-feedback" style="width: 100%;">
-                  Your username is required.
+                  Enter valid user name with 1-30 AlphaNumeric characters.
                 </div>
               </div>
             </div>
 
             <div class="mb-3">
-              <label for="email">Email <span class="text-muted">(Optional)</span></label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com">
+              <label for="email">Email </label>
+              <input type="email" class="form-control" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="you@example.com" required>
               <div class="invalid-feedback">
-                Please enter a valid email address for shipping updates.
+                Enter valid email address in format xx@xx.xxx.
               </div>
             </div>
 
             <div class="mb-3">
-              <label for="address">Address</label>
-              <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+              <label for="address">Address 1</label>
+              <input type="text" class="form-control" id="address" placeholder="xxxx" required>
               <div class="invalid-feedback">
                 Please enter your shipping address.
               </div>
@@ -105,7 +104,7 @@
 
             <div class="mb-3">
               <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-              <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+              <input type="text" class="form-control" id="address2" placeholder="xxxx">
             </div>
 
             <div class="row">
@@ -113,36 +112,34 @@
                 <label for="country">Country</label>
                 <select class="custom-select d-block w-100" id="country" required>
                   <option value="">Choose...</option>
-                  <option>United States</option>
+                  <option>Ireland</option>
+                  <option>United Kingdom</option>
                 </select>
                 <div class="invalid-feedback">
                   Please select a valid country.
                 </div>
               </div>
               <div class="col-md-4 mb-3">
-                <label for="state">State</label>
-                <select class="custom-select d-block w-100" id="state" required>
-                  <option value="">Choose...</option>
-                  <option>California</option>
-                </select>
+                <label for="state">State <span class="text-muted">(Optional)</span></label>
+                <input type="text" class="form-control" id="state" pattern="[A-Za-z0-9]+"  maxlength="20" placeholder="xxxx">
                 <div class="invalid-feedback">
                   Please provide a valid state.
                 </div>
               </div>
               <div class="col-md-3 mb-3">
                 <label for="zip">Zip</label>
-                <input type="text" class="form-control" id="zip" placeholder="" required>
+                <input type="text" class="form-control" id="zip" placeholder="" pattern="[A-Za-z0-9]+"  maxlength="10" required>
                 <div class="invalid-feedback">
                   Zip code required.
                 </div>
               </div>
             </div>
-            <hr class="mb-4">
+          <!--    <hr class="mb-4">
            
-            <div class="custom-control custom-checkbox">
+           <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="save-info">
               <label class="custom-control-label" for="save-info">Save this information for next time</label>
-            </div>
+            </div> -->
             <hr class="mb-4">
 
       
