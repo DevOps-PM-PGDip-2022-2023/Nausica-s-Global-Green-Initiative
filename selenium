@@ -38,3 +38,14 @@ UserName Valid Password Blank		Invalid
 UserName Blank Password Valid		Invalid
 UserName Invalid + Password Valid - Invalid
 UserName Valid + Password Invalid -	Invalid
+
+Test Scenario Valid first name with 1-30 Alpha characters.
+Test Scenario Valid last name with 1-30 Alpha characters.
+Test Scenario Valid user name with 1-30 AlphaNumeric characters.
+Test Scenario Email validation xxx@xx.xxx with no min or max lengths.
+Test Scenario Address1 Required with no validations
+Test Scenario Address2 Optional with no validations
+Test Scenario Country drop down with 2 values - Ireland and United Kingdom
+Test Scenario State Optional is free text with Alpha Numeric characters - max length 20
+Test Scenario Zip required is free text with Alpha Numeric characters - max length 10
+Test Scenario We are not implementing save info for next time.
