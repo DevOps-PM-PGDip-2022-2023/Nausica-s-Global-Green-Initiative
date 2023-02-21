@@ -60,11 +60,11 @@ resource "aws_db_security_group" "aurora_sg" {
     from_port        = 0
     to_port          = 3306
     protocol         = "TCP"
-    security_group_id = data.aws_security_group.ec2_sg.id
+    security_group_id = data.aws_security_group.ec2_sg.id #need to resolve
   }
 
   }
-}
+
 
 #resource "aws_db_subnet_group" "aurora_subnet_group" {
 
