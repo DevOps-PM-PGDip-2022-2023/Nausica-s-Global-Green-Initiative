@@ -2,12 +2,14 @@
 import psycopg2
 
 #change connection info
-conn = psycopg2.connect(
-    host="localhost",
-    database="suppliers",
-    user="postgres",
-    password="Abcd1234")
-
+try:
+    conn = psycopg2.connect(
+        host="localhost",
+        database="suppliers",
+        user="postgres",
+        password="Abcd1234")
+except:
+    pass
 
 
 def register_user(username = None, password = None):
@@ -36,7 +38,7 @@ def remove_user(username = None, password = None):
     cur = conn.cursor()
     sql = "DELETE FROM users WHERE name = %s"
     adr = (username, )
-    cur.execute(sql, val)
+    cur.execute(sql, adr)
 
 
 #todo: add,remove,update grants method 
@@ -54,24 +56,24 @@ def add_grant(name = None, ammount = None):
 def patch_grant(name = None, ammount = None, newname = None, newammount = None):
     cur = conn.cursor()
     sql = "SELECT * FROM grants WHERE name = %s"
-    adr = (username, )
+    adr = (name, )
     cur.execute(sql, adr)
     if len(cur.fetchall()) == 0:
-        register_user(username,password)
+        add_grant(name,ammount)
     else:
         sql = "UPDATE grants SET name = %s WHERE name = %s"
-        val = (newuser, username)
+        val = (name, newname)
         cur.execute(sql, val)
 
 def remove_grant(name = None, ammount = None):
     cur = conn.cursor()
     sql = "DELETE FROM grants WHERE name = %s"
-    adr = (username, )
-    cur.execute(sql, val)
+    adr = (name, )
+    cur.execute(sql, adr)
 
 
-def getall_grants()
+def getall_grants():
     cur = conn.cursor()
-    sql = "SELECT * FROM grants
+    sql = "SELECT * FROM grants"
     cur.execute(sql)
     return cur.fetchall()
