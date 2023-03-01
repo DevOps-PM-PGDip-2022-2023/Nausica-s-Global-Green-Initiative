@@ -43,7 +43,7 @@ build:
     - ls
   artifacts:
     paths:
-      - buildfile.zip
+      - ./buildfile.zip
 
 
 validate:
