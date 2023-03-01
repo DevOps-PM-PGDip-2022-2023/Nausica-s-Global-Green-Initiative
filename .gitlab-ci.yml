@@ -1,9 +1,20 @@
+variables:
+  AWS_REGION: us-east-1
+  APP_NAME: bitslovers-app
+  ENV_NAME: bitslovers-env
+  FILE: $CI_COMMIT_REF_NAME-$CI_PIPELINE_ID
+  BUCKET: app-versions
+  BUCKET_PREFIX: dev/
+  AWS_PLATFORM: Python 3.8
+  KEY: my-keypair-name
 stages:
+  - build
   - validate
   - plan
   - apply
-  - destroy
   - deploy
+  - destroy
+  
 
 image:
   name: hashicorp/terraform:light
@@ -20,17 +31,31 @@ before_script:
   - rm -rf .terraform
   - terraform --version
   - terraform init
+  -  apt-get update
+  - apt-get install -y zip unzip
+
+
+build:       
+  stage: build
+  script:
+    - ls
+    - cd ..
+    - ls
+    - zip  buildfile.zip -r  ./
+    - ls
+  artifacts:
+    paths:
+      - buildfile.zip
+
 
 validate:
   stage: validate
   script:
-  # - cd terraform
   - terraform validate
     
 plan:
   stage: plan
   script:
-    # - cd terraform
     - terraform plan -out "planfile"
   dependencies:
     - validate
@@ -41,7 +66,6 @@ plan:
 apply:
   stage: apply
   script:
-    # - cd terraform
     - terraform apply -input=false "planfile"
   dependencies:
     - plan
@@ -52,10 +76,15 @@ deploy:
   stage: deploy
   script:
     - cd ..
-    - aws elasticbeanstalk update-environment
-          --application-name GreenGiants
-          --environment-name GreenGiants
-          --version-label  $CI_COMMIT_SHORT_SHA
+    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+    - aws configure set region us-east-1
+    - aws s3 cp ./buildfile.zip s3://$s3_bucket_uri
+    - aws elasticbeanstalk create-application-version --application-name GreenGiants --version-label $CI_COMMIT_SHORT_SHA --source-bundle S3Bucket= s3://$s3_bucket_uri/build.zip ,S3Key=$S3_BUCKET
+    # - aws elasticbeanstalk update-environment --application-name mySampleApp --environment-name mySampleApp-env --version-label $CI_COMMIT_SHORT_SHA
+    # - aws elasticbeanstalk update-environment --application-name GreenGiants --environment-name GreenGiants --version-label  $CI_COMMIT_SHORT_SHA
+  dependencies:
+    - build
 
   when: manual
 
@@ -63,6 +92,7 @@ deploy:
 destroy:
   stage: destroy
   script:
-    # - cd terraform
-    - terraform destroy -input=false "planfile"
+    - terraform plan -destroy -out destroyplan
+    - terraform apply destroyplan
+    
   when: manual
