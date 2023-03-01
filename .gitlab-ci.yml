@@ -31,7 +31,7 @@ before_script:
   - rm -rf .terraform
   - terraform --version
   - terraform init
-  -  apt-get update
+  # - apt-get update
   - apt-get install -y zip unzip
 
 
