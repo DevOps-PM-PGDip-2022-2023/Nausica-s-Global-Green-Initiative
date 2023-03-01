@@ -2,9 +2,9 @@ locals {
   region = "us-east-1"
 
   tags = {
-    Name    = "GreenGiants"
+    Name        = "GreenGiants"
     Environment = "Production"
-    Contact  = "GreenGiants"
+    Contact     = "GreenGiants"
   }
 }
 
@@ -15,40 +15,40 @@ locals {
 
 resource "aws_rds_cluster" "aurora_cluster" {
 
-    cluster_identifier            = "green-giants"
-    database_name                 = "GreenGiants"
-    master_username               = "dbadmin"
-    master_password               = "12345678ab" #this will be change after the resource is created"
-    backup_retention_period       = 5
-    preferred_backup_window       = "02:00-03:00"
-    preferred_maintenance_window  = "wed:03:00-wed:04:00"
-    availability_zones            = ["us-east-1a", "us-east-1b", "us-east-1c"]
-    #db_subnet_group_name          = "${aws_db_subnet_group.aurora_subnet_group.name}"
-    final_snapshot_identifier     = "${var.environment_name}_aurora_cluster"
+  cluster_identifier           = "green-giants"
+  database_name                = "GreenGiants"
+  master_username              = "dbadmin"
+  master_password              = "12345678ab" #this will be change after the resource is created"
+  backup_retention_period      = 5
+  preferred_backup_window      = "02:00-03:00"
+  preferred_maintenance_window = "wed:03:00-wed:04:00"
+  availability_zones           = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  #db_subnet_group_name          = "${aws_db_subnet_group.aurora_subnet_group.name}"
+  final_snapshot_identifier = "${var.environment_name}auroraCluster"
 
-    tags = local.tags
+  tags = local.tags
 
-    lifecycle {
-        create_before_destroy = true
-    }
+  lifecycle {
+    create_before_destroy = true
+  }
 
 }
 
 resource "aws_rds_cluster_instance" "aurora_cluster_instance" {
 
-    count                 = "${length(split(",", var.vpc_rds_subnet_ids))}"
+  count = length(split(",", var.vpc_rds_subnet_ids))
 
-    identifier            = "green-giants"
-    cluster_identifier    = "${aws_rds_cluster.aurora_cluster.id}"
-    instance_class        = "db.t3.small"
-    #db_subnet_group_name  = "${aws_db_subnet_group.aurora_subnet_group.name}"
-    publicly_accessible   = true
+  identifier         = "green-giants"
+  cluster_identifier = aws_rds_cluster.aurora_cluster.id
+  instance_class     = "db.t3.small"
+  #db_subnet_group_name  = "${aws_db_subnet_group.aurora_subnet_group.name}"
+  publicly_accessible = true
 
-    tags = local.tags
+  tags = local.tags
 
-    lifecycle {
-        create_before_destroy = true
-    }
+  lifecycle {
+    create_before_destroy = true
+  }
 
 }
 
