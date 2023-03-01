@@ -47,9 +47,22 @@ apply:
     - plan
   when: manual
 
+deploy:
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+  stage: deploy
+  script:
+    - cd ..
+    - aws elasticbeanstalk update-environment
+          --application-name GreenGiants
+          --environment-name GreenGiants
+          --version-label  $CI_COMMIT_SHORT_SHA
+
+  when: manual
+
+
 destroy:
   stage: destroy
   script:
     # - cd terraform
-    - terraform destroy
+    - terraform destroy -input=false "planfile"
   when: manual
