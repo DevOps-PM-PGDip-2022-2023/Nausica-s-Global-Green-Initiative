@@ -22,13 +22,13 @@ before_script:
 validate:
   stage: validate
   script:
-  - cd terraform
+  # - cd terraform
   - terraform validate
     
 plan:
   stage: plan
   script:
-    - cd terraform
+    # - cd terraform
     - terraform plan -out "planfile"
   dependencies:
     - validate
@@ -39,7 +39,7 @@ plan:
 apply:
   stage: apply
   script:
-    - cd terraform
+    # - cd terraform
     - terraform apply -input=false "planfile"
   dependencies:
     - plan
