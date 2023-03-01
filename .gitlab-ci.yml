@@ -2,6 +2,8 @@ stages:
   - validate
   - plan
   - apply
+  - destroy
+  - deploy
 
 image:
   name: hashicorp/terraform:light
@@ -34,7 +36,7 @@ plan:
     - validate
   artifacts:
     paths:
-      - planfile
+      - /builds/greengiant1/Nausicaas-Global-Green-Initiative/terraform/planfile
       
 apply:
   stage: apply
@@ -43,4 +45,11 @@ apply:
     - terraform apply -input=false "planfile"
   dependencies:
     - plan
+  when: manual
+
+destroy:
+  stage: destroy
+  script:
+    # - cd terraform
+    - terraform destroy
   when: manual
