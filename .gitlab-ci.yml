@@ -29,8 +29,6 @@ before_script:
   - pwd 
 
 
-
-
 build:
   image: 'gitlab/gitlab-ee:latest'
   stage: build
