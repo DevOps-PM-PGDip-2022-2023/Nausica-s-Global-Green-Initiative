@@ -41,6 +41,8 @@ build:
     - ls
     - zip  buildfile.zip -r  ./
     - ls
+    - pwd
+    - ls
   artifacts:
     paths:
       - ./buildfile.zip
