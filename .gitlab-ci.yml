@@ -92,7 +92,7 @@ deploy:
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
     - aws configure set region us-east-1
     - aws s3 cp $BUILD_PATH s3://$s3_bucket_uri
-    - aws elasticbeanstalk create-application-version --application-name GreenGiants --version-label $CI_COMMIT_SHORT_SHA --source-bundle S3Bucket= s3://$s3_bucket_uri/build.zip ,S3Key=$S3_BUCKET
+    - aws elasticbeanstalk create-application-version --application-name GreenGiants --version-label $CI_COMMIT_SHORT_SHA --source-bundle S3Bucket= "websever-opensauce" ,S3Key="buildfile.zip"
     # - aws elasticbeanstalk update-environment --application-name mySampleApp --environment-name mySampleApp-env --version-label $CI_COMMIT_SHORT_SHA
     # - aws elasticbeanstalk update-environment --application-name GreenGiants --environment-name GreenGiants --version-label  $CI_COMMIT_SHORT_SHA
   dependencies:
