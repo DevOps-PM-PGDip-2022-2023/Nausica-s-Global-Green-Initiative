@@ -1,5 +1,5 @@
 locals {
-  region = "us-east-1"
+  region = "eu-west-1"
 
   tags = {
     Name        = "GreenGiants"
@@ -22,7 +22,7 @@ resource "aws_rds_cluster" "aurora_cluster" {
   backup_retention_period      = 5
   preferred_backup_window      = "02:00-03:00"
   preferred_maintenance_window = "wed:03:00-wed:04:00"
-  availability_zones           = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  availability_zones           = ["eu-west-1"]
   #db_subnet_group_name          = "${aws_db_subnet_group.aurora_subnet_group.name}"
   final_snapshot_identifier = "${var.environment_name}auroraCluster"
 
