@@ -138,7 +138,7 @@ deploy_aws_eb:
     AWS_VERSION_LABEL=${APP_NAME}-${APP_VERSION}-${CI_PIPELINE_ID}
 
     echo "Deploying app"
-    echo "y"| eb init -i ${APP_NAME} -p ${AWS_PLATFORM}  --region ${AWS_REGION}
+     \n | eb init -i ${APP_NAME} -p ${AWS_PLATFORM}  --region ${AWS_REGION}
     eb deploy ${APP_NAME} --version ${AWS_VERSION_LABEL}
   # only:
   #   refs:
