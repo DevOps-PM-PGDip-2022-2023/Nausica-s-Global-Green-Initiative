@@ -144,7 +144,7 @@ deploy_aws_eb:
   image: coxauto/aws-ebcli
   when: manual
   script: |
-
+    ls
     echo "init app"
     echo \n | eb init -i ${APP_NAME} -p ${AWS_PLATFORM}  --region ${AWS_REGION}
     echo "deploy app"
