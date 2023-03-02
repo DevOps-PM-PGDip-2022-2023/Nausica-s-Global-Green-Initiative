@@ -7,6 +7,7 @@ variables:
   BUCKET_PREFIX: dev/
   AWS_PLATFORM: Python 3.8
   KEY: my-keypair-name
+  BUILD_PATH : /builds/greengiant1/Nausicaas-Global-Green-Initiative/buildfile.zip
 stages:
   - build
   - validate
@@ -90,7 +91,7 @@ deploy:
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
     - aws configure set region us-east-1
-    - aws s3 cp ./buildfile.zip s3://$s3_bucket_uri
+    - aws s3 cp $BUILD_PATH s3://$s3_bucket_uri
     - aws elasticbeanstalk create-application-version --application-name GreenGiants --version-label $CI_COMMIT_SHORT_SHA --source-bundle S3Bucket= s3://$s3_bucket_uri/build.zip ,S3Key=$S3_BUCKET
     # - aws elasticbeanstalk update-environment --application-name mySampleApp --environment-name mySampleApp-env --version-label $CI_COMMIT_SHORT_SHA
     # - aws elasticbeanstalk update-environment --application-name GreenGiants --environment-name GreenGiants --version-label  $CI_COMMIT_SHORT_SHA
