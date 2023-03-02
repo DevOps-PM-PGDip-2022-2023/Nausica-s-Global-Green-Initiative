@@ -37,16 +37,15 @@ build:
     -  apt-cache gencaches
     -  apt-get install -y zip unzip
     - ls
-    - cd ..
-    - ls
+    # - cd ..
+    # - ls
     - zip  buildfile.zip -r  ./
     - ls
     - pwd
     - ls
   artifacts:
     paths:
-      - ./buildfile.zip
-
+      -  /builds/greengiant1/Nausicaas-Global-Green-Initiative/buildfile.zip
 
 validate:
   stage: validate
