@@ -144,12 +144,11 @@ deploy_aws_eb:
   image: coxauto/aws-ebcli
   when: manual
   script: |
-    AWS_VERSION_LABEL=${APP_NAME}-${APP_VERSION}-${CI_PIPELINE_ID}
 
     echo "init app"
     echo \n | eb init -i ${APP_NAME} -p ${AWS_PLATFORM}  --region ${AWS_REGION}
     echo "deploy app"
-    eb deploy ${APP_NAME} --version ${AWS_VERSION_LABEL}
+    eb deploy ${APP_NAME} 
   # only:
   #   refs:
   #     - master
