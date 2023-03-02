@@ -110,15 +110,13 @@ create_eb_version:
   script: |
     pip install awscli #Install awscli tools
     
-    echo "Creating zip file"
-    python zip.py ${APP_NAME}
 
     echo "Creating AWS Version Label"
     AWS_VERSION_LABEL=${APP_NAME}-${APP_VERSION}-${CI_PIPELINE_ID}
     S3_KEY="$AWS_VERSION_LABEL.zip"
 
     echo "Uploading to S3"
-    aws s3 cp ${APP_NAME}.zip s3://${S3_BUCKET}/${S3_KEY} --region ${AWS_REGION}
+    aws s3 cp ${BUILD_PATH} s3://${S3_BUCKET}/${S3_KEY} --region ${AWS_REGION}
 
     echo "Creating new app version"
     aws elasticbeanstalk create-application-version \
