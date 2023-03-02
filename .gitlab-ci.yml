@@ -1,5 +1,5 @@
 variables:
-  APP_NAME: GreenGiants
+  APP_NAME: GreenGiants-test
   APP_VERSION: "1.0.0"
   S3_BUCKET: ${s3_bucket_uri}
   AWS_ID: ${AWS_ID}
