@@ -1,12 +1,12 @@
 variables:
-  AWS_REGION: us-east-1
-  APP_NAME: bitslovers-app
-  ENV_NAME: bitslovers-env
-  FILE: $CI_COMMIT_REF_NAME-$CI_PIPELINE_ID
-  BUCKET: app-versions
-  BUCKET_PREFIX: dev/
+  APP_NAME: GreenGiant
+  APP_VERSION: "1.0.0"
+  S3_BUCKET: ${s3_bucket_uri}
+  AWS_ID: ${AWS_ID}
+  AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+  AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+  AWS_REGION: eu-west-1
   AWS_PLATFORM: Python 3.8
-  KEY: my-keypair-name
   BUILD_PATH : /builds/greengiant1/Nausicaas-Global-Green-Initiative/buildfile.zip
 stages:
   - build
@@ -83,25 +83,68 @@ apply:
     - plan
   when: manual
 
-deploy:
-  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+# deploy:
+#   image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+#   stage: deploy
+#   script:
+#     - cd ..
+#     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+#     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+#     - aws configure set region us-east-1
+#     - aws s3 cp $BUILD_PATH s3://$s3_bucket_uri
+#     # - aws elasticbeanstalk create-application-version --application-name GreenGiants --version-label $CI_COMMIT_SHORT_SHA --source-bundle S3Bucket= "websever-opensauce" ,S3Key="buildfile.zip" --auto-create-application
+#     - aws elasticbeanstalk create-application-version --application-name YourEBSAppName --version-label YourVersionLabel --source-bundle S3Bucket=$s3_bucket_uri,S3Key="buildfile.zip" 
+#     - aws elasticbeanstalk update-environment --application-name YourEBSAppName --environment-name YourEBSEnvironmentName --version-label YourVersionLabel
+#     # - aws elasticbeanstalk update-environment --application-name mySampleApp --environment-name mySampleApp-env --version-label $CI_COMMIT_SHORT_SHA
+#     # - aws elasticbeanstalk update-environment --application-name GreenGiants --environment-name GreenGiants --version-label  $CI_COMMIT_SHORT_SHA
+#   dependencies:
+#     - build
+
+#   when: manual
+
+
+create_eb_version:
   stage: deploy
-  script:
-    - cd ..
-    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-    - aws configure set region us-east-1
-    - aws s3 cp $BUILD_PATH s3://$s3_bucket_uri
-    # - aws elasticbeanstalk create-application-version --application-name GreenGiants --version-label $CI_COMMIT_SHORT_SHA --source-bundle S3Bucket= "websever-opensauce" ,S3Key="buildfile.zip" --auto-create-application
-    - aws elasticbeanstalk create-application-version --application-name YourEBSAppName --version-label YourVersionLabel --source-bundle S3Bucket=$s3_bucket_uri,S3Key="buildfile.zip" 
-    - aws elasticbeanstalk update-environment --application-name YourEBSAppName --environment-name YourEBSEnvironmentName --version-label YourVersionLabel
-    # - aws elasticbeanstalk update-environment --application-name mySampleApp --environment-name mySampleApp-env --version-label $CI_COMMIT_SHORT_SHA
-    # - aws elasticbeanstalk update-environment --application-name GreenGiants --environment-name GreenGiants --version-label  $CI_COMMIT_SHORT_SHA
-  dependencies:
-    - build
+  image: python:latest
+  allow_failure: false
+  script: |
+    pip install awscli #Install awscli tools
+    
+    echo "Creating zip file"
+    python zip.py ${APP_NAME}
 
+    echo "Creating AWS Version Label"
+    AWS_VERSION_LABEL=${APP_NAME}-${APP_VERSION}-${CI_PIPELINE_ID}
+    S3_KEY="$AWS_VERSION_LABEL.zip"
+
+    echo "Uploading to S3"
+    aws s3 cp ${APP_NAME}.zip s3://${S3_BUCKET}/${S3_KEY} --region ${AWS_REGION}
+
+    echo "Creating new app version"
+    aws elasticbeanstalk create-application-version \
+      --application-name ${APP_NAME} \
+      --version-label $AWS_VERSION_LABEL \
+      --region ${AWS_REGION} \
+      --source-bundle S3Bucket=${S3_BUCKET},S3Key=${S3_KEY} \
+      --description "${CI_COMMIT_DESCRIPTION}" \
+      --auto-create-application \
+  # only:
+  #   refs:
+  #     - master
+
+deploy_aws_eb:
+  stage: deploy
+  image: coxauto/aws-ebcli
   when: manual
+  script: |
+    AWS_VERSION_LABEL=${APP_NAME}-${APP_VERSION}-${CI_PIPELINE_ID}
 
+    echo "Deploying app"
+    eb init -i ${APP_NAME} -p ${AWS_PLATFORM} -k ${AWS_ID} --region ${AWS_REGION}
+    eb deploy ${APP_NAME} --version ${AWS_VERSION_LABEL}
+  # only:
+  #   refs:
+  #     - master
 
 destroy:
   stage: destroy
