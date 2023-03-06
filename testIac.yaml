@@ -1,0 +1,599 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: CF-BUSS_NET project
+
+Parameters:
+  vpcCIDR:
+    Description: The VPC IP range
+    Default: 10.10.0.0/16
+    Type: String
+
+  BastionCIDR:
+    Description: The bastion host (jumpBox) IP range
+    Default: 10.10.70.0/24
+    Type: String
+
+  PublicSubnet1CIDR:
+    Description: IP range for Public subnet 1 containing WebApp
+    Default: 10.10.10.0/24
+    Type: String
+
+  PublicSubnet2CIDR:
+    Description: IP range for Public subnet 2 containing WebApp2
+    Default: 10.10.20.0/24
+    Type: String
+
+  PrivateSubnet1CIDR:
+    Description: IP range for private subnet 1 containing backend
+    Default: 10.10.30.0/24
+    Type: String
+
+  PrivateSubnet2CIDR:
+    Description: IP range for private subnet 2 containing backend 2
+    Default: 10.10.40.0/24
+    Type: String
+
+  PrivateSubnet3CIDR:
+    Description: IP range for private subnet 3 containing Database
+    Default: 10.10.50.0/24
+    Type: String
+
+  PrivateSubnet4CIDR:
+    Description: IP range for private subnet 4 containing  backup Database
+    Default: 10.10.60.0/24
+    Type: String
+
+  AdminSSHAddr:
+    Description: The IP address range that can be used to SSH to the EC2 instances
+    Type: String #9 chars = 0.0.0.0/0 to 18 chars 255.255.255.255/32
+    MinLength: "9"
+    MaxLength: "18"
+    Default: 0.0.0.0/0
+    AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})" # minimal regex for ip address looking at the number of characters only
+    ConstraintDescription: Use a valid ip address.
+
+  LatestAmiId:
+    Description: Region specific image from the Parameter Store
+    Type: "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>"
+    Default: "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+
+  InstanceType:
+    Description: Amazon EC2 instance type for the instances
+    Type: String
+    AllowedValues:
+      - t2.micro
+      - t2.small
+      - t2.medium
+    Default: t2.micro
+
+  appDB:
+    Type: String
+    Default: appDB
+  appDBUser:
+    Type: String
+    Default: appDBuser
+  appDBPass:
+    Default: noD5onad
+    Type: String
+    NoEcho: true
+    Description: "It should be less than 8 characters"
+
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref vpcCIDR
+      EnableDnsHostnames: false
+      EnableDnsSupport: false
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: CF_BUSS_NEt
+
+  VpcCidrBlockIpv6:
+    Type: "AWS::EC2::VPCCidrBlock"
+    Properties:
+      VpcId: !Ref "VPC"
+      AmazonProvidedIpv6CidrBlock: true
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: Internet Gateway
+
+  InternetGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref InternetGateway
+      VpcId: !Ref VPC
+
+  BastionHostSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Select [0, !GetAZs ""]
+      CidrBlock: !Ref BastionCIDR
+      EnableDns64: false
+      MapPublicIpOnLaunch: false
+      VpcId: !Ref VPC # Required
+      # OutpostArn: "String"
+      # PrivateDnsNameOptionsOnLaunch: JSON
+      Tags:
+        - Key: Name
+          Value: jump box subnet
+
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Select [0, !GetAZs ""]
+      CidrBlock: !Ref PublicSubnet1CIDR
+      EnableDns64: false
+      MapPublicIpOnLaunch: false
+      VpcId: !Ref VPC # Required
+      # OutpostArn: "String"
+      # PrivateDnsNameOptionsOnLaunch: JSON
+      Tags:
+        - Key: Name
+          Value: Pub subnet 1
+
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Select [1, !GetAZs ""]
+      CidrBlock: !Ref PublicSubnet2CIDR
+      EnableDns64: false
+      MapPublicIpOnLaunch: false
+      VpcId: !Ref VPC # Required
+      # OutpostArn: "String"
+      # PrivateDnsNameOptionsOnLaunch: JSON
+      Tags:
+        - Key: Name
+          Value: Pub subnet 2
+
+  PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Select [0, !GetAZs ""]
+      CidrBlock: !Ref PrivateSubnet1CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: PrivateSubnet1
+      VpcId: !Ref "VPC"
+
+  PrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Select [1, !GetAZs ""]
+      # AvailabilityZoneId: "String"
+      CidrBlock: !Ref PrivateSubnet2CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: PrivateSubnet2
+      VpcId: !Ref VPC
+
+  PrivateSubnet3:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Select [0, !GetAZs ""]
+      CidrBlock: !Ref PrivateSubnet3CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: PrivateSubnet3
+      VpcId: !Ref VPC
+
+  PrivateSubnet4:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Select [1, !GetAZs ""]
+      CidrBlock: !Ref PrivateSubnet4CIDR
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: PrivateSubnet4
+      VpcId: !Ref VPC
+
+  WebAppLoadBalancerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "HTTP access WebSever Load Balancer"
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          FromPort: 80
+          IpProtocol: tcp
+          ToPort: 80
+        - CidrIp: 0.0.0.0/0
+          FromPort: 433
+          IpProtocol: tcp
+          ToPort: 433
+      Tags:
+        - Key: Name
+          Value: Web App Load Balancer Security Group
+      VpcId: !Ref VPC
+
+  WebSeverSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "HTTP/HTTPS from port 80/433 access webApp Load Balancer"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          SourceSecurityGroupId: !Ref WebAppLoadBalancerSecurityGroup
+          FromPort: 80
+          ToPort: 80
+        - IpProtocol: tcp
+          SourceSecurityGroupId: !Ref WebAppLoadBalancerSecurityGroup
+          FromPort: 433
+          ToPort: 433
+        - IpProtocol: tcp
+          SourceSecurityGroupId: !Ref SSHSecurityGroup
+          FromPort: 22
+          ToPort: 22
+      Tags:
+        - Key: Name
+          Value: Web Server SecurityGroup
+      VpcId: !Ref VPC
+
+  BackEndLoadBalancerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "HTTP access BackEnd Load Balancer"
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          FromPort: 90
+          IpProtocol: tcp
+          ToPort: 90
+        - CidrIp: 0.0.0.0/0
+          FromPort: 533
+          IpProtocol: tcp
+          ToPort: 533
+      Tags:
+        - Key: Name
+          Value: Web App Load Balancer Security Group
+      VpcId: !Ref VPC
+
+  BackEndSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "HTTP access Back End Load Balancer"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          SourceSecurityGroupId: !Ref BackEndLoadBalancerSecurityGroup
+          FromPort: 90
+          ToPort: 90
+        - IpProtocol: tcp
+          SourceSecurityGroupId: !Ref BackEndLoadBalancerSecurityGroup
+          FromPort: 533
+          ToPort: 533
+        - IpProtocol: tcp
+          SourceSecurityGroupId: !Ref SSHSecurityGroup
+          FromPort: 22
+          ToPort: 22
+        - IpProtocol: tcp
+          SourceSecurityGroupId: !Ref WebSeverSecurityGroup
+          FromPort: 117
+          ToPort: 117
+      Tags:
+        - Key: Name
+          Value: Back End Server Security Group
+      VpcId: !Ref VPC
+
+  # DataBaseSecurityGroup:
+  #   Type: AWS::EC2::SecurityGroup
+  #   Properties:
+  #     GroupDescription: "HTTP  access WebSever Load Balancer"
+  #     SecurityGroupIngress:
+  #     - IpProtocol: tcp
+  #       SourceSecurityGroupId: !Ref BackEndSecurityGroup
+  #       FromPort: 3303
+  #       ToPort: 3303
+  #     Tags:
+  #       - Key: Name
+  #         Value: Web Server SecurityGroup
+  #     VpcId: !Ref VPC
+
+  SQLDBSecurityGroup:
+    Type: AWS::RDS::DBSecurityGroup
+    Properties:
+      DBSecurityGroupIngress: # Required
+        - EC2SecurityGroupId: !Ref BackEndSecurityGroup
+      EC2VpcId: !Ref VPC
+      GroupDescription: "DB security Group" # Required
+      Tags:
+        - Key: Name
+          Value: BackEnd Server SecurityGroup
+
+  SSHSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      VpcId: !Ref VPC
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+        - CidrIp: !Ref AdminSSHAddr
+          FromPort: 22
+          IpProtocol: tcp
+          ToPort: 22
+  #Create a WebServer Load Balancer
+  WebAppLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      # IpAddressType: "String"
+      # LoadBalancerAttributes:
+      #   LoadBalancerAttributes
+      Name: WebAppServerLoadBalancer
+      SecurityGroups:
+        - !Ref WebAppLoadBalancerSecurityGroup
+      Subnets:
+        - !Ref PublicSubnet1
+        - !Ref PublicSubnet2
+      Tags:
+        - Key: WebLoadbalancer
+          Value: PublicLoadBalancer
+      Type: application
+
+  WebAppLoadBalancerListener:
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
+    Properties:
+      DefaultActions:
+        - Type: "redirect"
+          RedirectConfig:
+            Protocol: "HTTPS"
+            Port: 443
+            Host: "#{host}"
+            Path: "/#{path}"
+            Query: "#{query}"
+            StatusCode: "HTTP_301"
+      LoadBalancerArn: !Ref WebAppLoadBalancer
+      Port: 80
+      Protocol: "HTTP"
+
+  MyCertificate:
+    Type: "AWS::CertificateManager::Certificate"
+    Properties:
+      DomainName: www.rotimi.biz
+      ValidationMethod: DNS
+
+  WebAppLoadBalancerCertificate:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      Certificates:
+        - CertificateArn: !Ref MyCertificate
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref WebAppLoadBalancerTargetGroup
+      LoadBalancerArn: !Ref WebAppLoadBalancer
+      Port: 443
+      Protocol: HTTPS
+
+  WebAppLoadBalancerTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckEnabled: true
+      Name: WebSevers
+      Protocol: HTTP
+      Port: 80
+      VpcId: !Ref VPC
+
+  #Create a Back End Load Balancer
+  BackEndLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      # IpAddressType: "String"
+      # LoadBalancerAttributes:
+      #   LoadBalancerAttributes
+      Name: BackEndServerLoadBalancer
+      SecurityGroups:
+        - !Ref WebAppLoadBalancerSecurityGroup
+      Subnets:
+        - !Ref PrivateSubnet1
+        - !Ref PrivateSubnet2
+      Tags:
+        - Key: WebLoadbalancer
+          Value: Public Load Balancer
+      Type: application
+
+  BackEndLoadBalancerListener:
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
+    Properties:
+      DefaultActions:
+        - Type: "redirect"
+          RedirectConfig:
+            Protocol: "HTTPS"
+            Port: 543
+            Host: "#{host}"
+            Path: "/#{path}"
+            Query: "#{query}"
+            StatusCode: "HTTP_301"
+      LoadBalancerArn: !Ref BackEndLoadBalancer
+      Port: 90
+      Protocol: "HTTP"
+
+  BackEndLoadBalancerCertificate:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      # AlpnPolicy:
+      #   - String
+      Certificates:
+        - CertificateArn: !Ref MyCertificate
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref BackEndLoadBalancerTargetGroup
+      LoadBalancerArn: !Ref BackEndLoadBalancer
+      Port: 543
+      Protocol: HTTPS
+
+  BackEndLoadBalancerTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckEnabled: true
+      Name: backEnd
+      Protocol: HTTP
+      Port: 90
+      VpcId: !Ref VPC
+
+  myLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: !Sub ${AWS::StackName}-launch-template
+      LaunchTemplateData:
+        ImageId: !Ref LatestAmiId
+        InstanceType: !Ref InstanceType
+
+  WebServerAutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      LaunchTemplate:
+        LaunchTemplateId: !Ref myLaunchTemplate
+        Version: !GetAtt myLaunchTemplate.LatestVersionNumber
+      MaxSize: "4"
+      MinSize: "1"
+      DesiredCapacity: "3"
+      VPCZoneIdentifier:
+        - !Ref PublicSubnet1
+        - !Ref PublicSubnet2
+
+  BackEndAutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      LaunchTemplate:
+        LaunchTemplateId: !Ref myLaunchTemplate
+        Version: !GetAtt myLaunchTemplate.LatestVersionNumber
+      MaxSize: "4"
+      MinSize: "1"
+      DesiredCapacity: "3"
+      VPCZoneIdentifier:
+        - !Ref PrivateSubnet1
+        - !Ref PrivateSubnet2
+
+  NatGateway1EIP:
+    Type: AWS::EC2::EIP
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      Domain: vpc
+
+  NatGateway1:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt NatGateway1EIP.AllocationId
+      SubnetId: !Ref PublicSubnet1
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: Public Routes
+
+  DefaultPublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  PublicSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet1
+
+  PrivateSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PrivateSubnet1
+
+  NatGateway2EIP:
+    Type: AWS::EC2::EIP
+    DependsOn: InternetGatewayAttachment
+    Properties:
+      Domain: vpc
+
+  NatGateway2:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt NatGateway2EIP.AllocationId
+      SubnetId: !Ref PublicSubnet2
+
+  PublicSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet2
+
+  PrivateSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PrivateSubnet2
+
+  RDSubnet:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: data base subnets
+      DBSubnetGroupName: DB-subnetgroup
+      SubnetIds:
+        - Ref: PrivateSubnet3
+        - Ref: PrivateSubnet4
+
+  SQLDbInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBName: !Ref appDB
+      MasterUsername: !Ref appDBUser
+      DBSecurityGroups:
+        - !Ref SQLDBSecurityGroup
+      DBSubnetGroupName:
+        Ref: RDSubnet
+      MasterUserPassword: !Ref appDBPass
+      Engine: MySQL
+      DBInstanceClass: db.t2.micro
+      StorageType: gp2
+      PubliclyAccessible: True
+      AllocatedStorage: "20"
+      DBInstanceIdentifier: !Join ["-", ["SQLDbInstance", !Ref "AWS::Region"]]
+      AvailabilityZone: !Select [0, !GetAZs ""]
+
+  JumpBox:
+    Type: "AWS::EC2::KeyPair"
+    Properties:
+      KeyName: MyJumpBox
+
+  BastionHost:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !Ref LatestAmiId
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref JumpBox
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "true"
+          DeviceIndex: "0"
+          GroupSet:
+            - Ref: "SSHSecurityGroup"
+          SubnetId:
+            Ref: "BastionHostSubnet"
+
+  MyFlowLogDeliveringToS3:
+    Type: AWS::EC2::FlowLog
+    Properties:
+      ResourceId: !Ref PrivateSubnet4
+      ResourceType: Subnet
+      TrafficType: ACCEPT
+      LogDestination: arn:aws:s3:::websever-opensauce/flowLog/
+      LogDestinationType: s3
+      LogFormat: ${version} ${vpc-id} ${subnet-id} ${instance-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${tcp-flags} ${type} ${pkt-srcaddr} ${pkt-dstaddr}
+      MaxAggregationInterval: 60
+      DestinationOptions:
+        FileFormat: parquet
+        HiveCompatiblePartitions: true
+        PerHourPartition: true
+      Tags:
+        - Key: Name
+          Value: FlowLogForSubnetB
+        - Key: Purpose
+          Value: AcceptTraffic
+
+  # output
