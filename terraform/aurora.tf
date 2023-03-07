@@ -1,10 +1,6 @@
 #not available in eu west
 locals {
-<<<<<<< HEAD
   region = "eu-east-1"
-=======
-  region = "eu-west-1"
->>>>>>> main
 
   tags = {
     Name        = "GreenGiants"
