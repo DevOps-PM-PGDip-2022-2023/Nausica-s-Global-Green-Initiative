@@ -23,7 +23,7 @@ variable "subnet_id" {
 
 variable "ami_id" {
   description = "The AMI to use"
-  
+
   # default = "ami-09d56f8956ab235b3"  us 
   default = "ami-0e8e9ef9747898a55" # eu 
 
