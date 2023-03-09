@@ -10,6 +10,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 application = app
 
+data=""
 
 @app.route("/")
 def main():
