@@ -1,12 +1,15 @@
 
 import psycopg2
 
-# change connection info
-conn = psycopg2.connect(
-    host="green-giants",
-    database="GreenGiants",
-    user="dbadmin",
-    password="12345678ab")
+#change connection info
+try:
+    conn = psycopg2.connect(
+        host="localhost",
+        database="suppliers",
+        user="postgres",
+        password="Abcd1234")
+except:
+    pass
 
 
 def register_user(username=None, password=None):
