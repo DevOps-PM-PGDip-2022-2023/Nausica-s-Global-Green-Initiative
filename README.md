@@ -13,9 +13,8 @@ Pauric Dawson
 - Dean Moore
 - Goran Kraljic(withdrew)
 - Julian Fitzsimons(No Input)
-- Kehinde Awoniran
+- Kehinde/Rotimi Awoniran
 - Samantha Toner
-- Rotimi Awoniran
 
 # Project Deadline
 23 March 2023
@@ -90,7 +89,8 @@ Selenium is planned to be used for automated testing
 JIRA Project and Kanban Board https://l00177576-devops.atlassian.net/jira/software/projects/GGI/boards/3
 Confluence Page https://l00177576-devops.atlassian.net/wiki/spaces/SD/overview?homepageId=229464
 Sprint Retros available (https://easyretro.io/publicboard/4dbxdGABPHeYondyMoldWXrgJRP2/e910232b-de78-41bb-8e6e-fa662582aa68)
-
+Agile Sprints of 2 week duration took place
+Stand Ups conducted as part of tue Lecture plus every Thursday and on a few occassions on a Sunday evening, this will continue until the end of the Project
 # Social Contract
     Mobile phones be left on silent during sprint sessions and class time.
     Be on time for team meetings and class, if you are running late let the group know by sending a message into the Slack channel.
@@ -99,14 +99,14 @@ Sprint Retros available (https://easyretro.io/publicboard/4dbxdGABPHeYondyMoldWX
     Do not speak over someone when they are expressing a point, everyone has an equal voice.
     No blame culture.
     Do not be afraid to ask for help, we are all learning.
-    No invisble work.
+    No invisble work. - Dean has been assist Aidan with the Virtual Box Terminal Issues
     Ask questions to make sure you understand the task given to you.
     Try have some fun, team work makes the dream work.
-    Use Agile methodoligies in the project at all times.
+    Use Agile methodoligies in the project at all times. User Stories identified from the Project brief, the user stories were created and prioritised based on the brief after initial questions were asked
 
 # Meetings
-Stand-ups will occur on Every Tue at the end of class and Thursday at 6:30. Two per week.
-The order that people give their updates will be decided by Scrum Master.
+Stand-ups will occur on Every Tue at the end of class and Thursday at 6:30. Two per week. These also took place on Sunday evenings
+The order that people give their updates will be decided by Scrum Master. The team decided this and mostly Dean as he was proactive in setting up Zoom calls
 Updates will be in the form: What I've done, Impediments, What I plan to do.
 Sprint planning will occur at <<date/time>> every week.
 Please add and update items within <<issue management tool>> a prior to the sprint planning session.
