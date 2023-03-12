@@ -1,0 +1,112 @@
+aidan@Tuesday:~$ ls
+Desktop    Downloads  Pictures  Public  Templates
+Documents  Music      Project   snap    Videos
+aidan@Tuesday:~$ pip install numpy
+Defaulting to user installation because normal site-packages is not writeable
+Collecting numpy
+  Downloading numpy-1.24.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (17.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 17.3/17.3 MB 13.4 MB/s eta 0:00:00
+Installing collected packages: numpy
+Successfully installed numpy-1.24.2
+aidan@Tuesday:~$ python -m venv venv 
+The virtual environment was not created successfully because ensurepip is not
+available.  On Debian/Ubuntu systems, you need to install the python3-venv
+package using the following command.
+
+    apt install python3.10-venv
+
+You may need to use sudo with that command.  After installing the python3-venv
+package, recreate your virtual environment.
+
+Failing command: ['/home/aidan/venv/bin/python', '-Im', 'ensurepip', '--upgrade', '--default-pip']
+
+aidan@Tuesday:~$ apt install python3.10-venv
+E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
+E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?
+aidan@Tuesday:~$ cd root
+bash: cd: root: No such file or directory
+aidan@Tuesday:~$ ls
+Desktop    Downloads  Pictures  Public  Templates  Videos
+Documents  Music      Project   snap    venv
+aidan@Tuesday:~$ cd ..
+aidan@Tuesday:/home$ cd ..
+aidan@Tuesday:/$ ls
+bin    dev   lib    libx32      mnt   root  snap      sys  var
+boot   etc   lib32  lost+found  opt   run   srv       tmp
+cdrom  home  lib64  media       proc  sbin  swapfile  usr
+aidan@Tuesday:/$ cd ..
+aidan@Tuesday:/$ ls
+bin    dev   lib    libx32      mnt   root  snap      sys  var
+boot   etc   lib32  lost+found  opt   run   srv       tmp
+cdrom  home  lib64  media       proc  sbin  swapfile  usr
+aidan@Tuesday:/$ apt install python3.10-venv
+E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
+E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?
+aidan@Tuesday:/$ pwd
+/
+aidan@Tuesday:/$ cd root
+bash: cd: root: Permission denied
+aidan@Tuesday:/$ /root
+bash: /root: Is a directory
+aidan@Tuesday:/$ cat /etc/environment
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+aidan@Tuesday:/$ env | grep -i proxy
+aidan@Tuesday:/$ python -m venv venv
+Error: [Errno 13] Permission denied: '/venv'
+aidan@Tuesday:/$ python -m
+Argument expected for the -m option
+usage: python [option] ... [-c cmd | -m mod | file | -] [arg] ...
+Try `python -h' for more information.
+aidan@Tuesday:/$ ls
+bin    dev   lib    libx32      mnt   root  snap      sys  var
+boot   etc   lib32  lost+found  opt   run   srv       tmp
+cdrom  home  lib64  media       proc  sbin  swapfile  usr
+aidan@Tuesday:/$ cd home
+aidan@Tuesday:/home$ ls
+aidan
+aidan@Tuesday:/home$ cd aidan
+aidan@Tuesday:~$ ls
+Desktop    Downloads  Pictures  Public  Templates  Videos
+Documents  Music      Project   snap    venv
+aidan@Tuesday:~$ cd Project/
+aidan@Tuesday:~/Project$ python -m
+Argument expected for the -m option
+usage: python [option] ... [-c cmd | -m mod | file | -] [arg] ...
+Try `python -h' for more information.
+aidan@Tuesday:~/Project$ python -m venv venv
+The virtual environment was not created successfully because ensurepip is not
+available.  On Debian/Ubuntu systems, you need to install the python3-venv
+package using the following command.
+
+    apt install python3.10-venv
+
+You may need to use sudo with that command.  After installing the python3-venv
+package, recreate your virtual environment.
+
+Failing command: ['/home/aidan/Project/venv/bin/python', '-Im', 'ensurepip', '--upgrade', '--default-pip']
+
+aidan@Tuesday:~/Project$ apt install python3.10-venv
+E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
+E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?
+aidan@Tuesday:~/Project$ /root
+bash: /root: Is a directory
+aidan@Tuesday:~/Project$ cd /root
+bash: cd: /root: Permission denied
+aidan@Tuesday:~/Project$ numpy --version
+Command 'numpy' not found, did you mean:
+  command 'lumpy' from deb lumpy-sv (0.3.1+dfsg-6)
+Try: sudo apt install <deb name>
+aidan@Tuesday:~/Project$ pip install numpy
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: numpy in /home/aidan/.local/lib/python3.10/site-packages (1.24.2)
+aidan@Tuesday:~/Project$ cd Nausicaas-Global-Green-Initiative/
+aidan@Tuesday:~/Project/Nausicaas-Global-Green-Initiative$ pip install numpy
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: numpy in /home/aidan/.local/lib/python3.10/site-packages (1.24.2)
+aidan@Tuesday:~/Project/Nausicaas-Global-Green-Initiative$ apt install python3.10-venv
+E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
+E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?
+aidan@Tuesday:~/Project/Nausicaas-Global-Green-Initiative$ apt install python3.10-venv
+E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
+E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?
+aidan@Tuesday:~/Project/Nausicaas-Global-Green-Initiative$ 
