@@ -10,10 +10,11 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 application = app
 
+data=""
 
 @app.route("/")
 def main():
-    data = getall_grants()
+    #data = getall_grants()
     if not session.get("name"):
         return redirect("/login")
     return render_template('index.html', name=session.get("name"), role=session.get("role"), data=data)
@@ -38,12 +39,14 @@ def login():
     if request.method == "POST":
         username = request.form.get("name")
         password = request.form.get("password")
-        if search(username, password):
-            session["name"] = username
-            session["role"] = getrole(username, password)
-            return redirect("/")
-        else:
-            return redirect("/login")
+        session["name"] = username
+        return redirect("/")
+#         if search(username, password):
+#             session["name"] = username
+#             session["role"] = getrole(username, password)
+#             return redirect("/")
+#         else:
+#             return redirect("/login")
     return render_template('login.html')
 
 
