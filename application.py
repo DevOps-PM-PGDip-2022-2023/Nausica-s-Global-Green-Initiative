@@ -33,6 +33,12 @@ def customer():
         return redirect("/login")
     return render_template('CustomerDetails.html', name=session.get("name"), role=session.get("role"))
 
+@app.route("/user")
+def user():
+    if not session.get("name"):
+        return redirect("/login")
+    return render_template('UserDetails.html', name=session.get("name"), role=session.get("role"))
+
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
@@ -47,7 +53,7 @@ def login():
 #             return redirect("/")
 #         else:
 #             return redirect("/login")
-    return render_template('login.html')
+    return render_template("login.html")
 
 
 if __name__ == "__main__":
