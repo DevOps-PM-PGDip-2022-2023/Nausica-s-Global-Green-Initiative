@@ -3,7 +3,7 @@ import psycopg2
 
 # change connection info
 conn = psycopg2.connect(
-    host="green-giants",
+    host="green-giants.cluster-cvyu518jf2zy.eu-west-1.rds.amazonaws.com",
     database="GreenGiants",
     user="dbadmin",
     password="12345678ab")
