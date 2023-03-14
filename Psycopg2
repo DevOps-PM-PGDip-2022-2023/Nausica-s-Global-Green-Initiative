@@ -1,0 +1,92 @@
+Setting up python3-jinja2 (3.0.3-1) ...
+Setting up python3-flask (2.0.1-2ubuntu1) ...
+corleya@AidanRetry:~$ ls
+Desktop    Downloads  Pictures  Public  Templates
+Documents  Music      project   snap    Videos
+corleya@AidanRetry:~$ cd project
+corleya@AidanRetry:~/project$ ls
+Nausicaas-Global-Green-Initiative
+corleya@AidanRetry:~/project$ cd Nausicaas-Global-Green-Initiative/
+corleya@AidanRetry:~/project/Nausicaas-Global-Green-Initiative$ python3 app.py
+Traceback (most recent call last):
+  File "/home/corleya/project/Nausicaas-Global-Green-Initiative/app.py", line 2, in <module>
+    from flask_session import Session
+ImportError: cannot import name 'Session' from 'flask_session' (unknown location)
+corleya@AidanRetry:~/project/Nausicaas-Global-Green-Initiative$ pip install -r requirement.txt
+Defaulting to user installation because normal site-packages is not writeable
+ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirement.txt'
+corleya@AidanRetry:~/project/Nausicaas-Global-Green-Initiative$ ls
+'Access Issue Aidan'    dockerfile           selenium
+ ansible                flask_session        templates
+ app.py                'Green Giants.pptx'   terraform
+ auth.py                __pycache__         'Unit Testing.docx'
+ db_methods.py          README.md
+'Detailed Steps.docx'   requirements.txt
+corleya@AidanRetry:~/project/Nausicaas-Global-Green-Initiative$ pip install -r requirements.txt
+Defaulting to user installation because normal site-packages is not writeable
+Collecting psycopg2
+  Downloading psycopg2-2.9.5.tar.gz (384 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 384.3/384.3 KB 3.3 MB/s eta 0:00:00
+  Preparing metadata (setup.py) ... error
+  error: subprocess-exited-with-error
+  
+  × python setup.py egg_info did not run successfully.
+  │ exit code: 1
+  ╰─> [23 lines of output]
+      running egg_info
+      creating /tmp/pip-pip-egg-info-8fbj79bp/psycopg2.egg-info
+      writing /tmp/pip-pip-egg-info-8fbj79bp/psycopg2.egg-info/PKG-INFO
+      writing dependency_links to /tmp/pip-pip-egg-info-8fbj79bp/psycopg2.egg-info/dependency_links.txt
+      writing top-level names to /tmp/pip-pip-egg-info-8fbj79bp/psycopg2.egg-info/top_level.txt
+      writing manifest file '/tmp/pip-pip-egg-info-8fbj79bp/psycopg2.egg-info/SOURCES.txt'
+      
+      Error: pg_config executable not found.
+      
+      pg_config is required to build psycopg2 from source.  Please add the directory
+      containing pg_config to the $PATH or specify the full executable path with the
+      option:
+      
+          python setup.py build_ext --pg-config /path/to/pg_config build ...
+      
+      or with the pg_config option in 'setup.cfg'.
+      
+      If you prefer to avoid building psycopg2 from source, please install the PyPI
+      'psycopg2-binary' package instead.
+      
+      For further information please check the 'doc/src/install.rst' file (also at
+      <https://www.psycopg.org/docs/install.html>).
+      
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: metadata-generation-failed
+
+× Encountered error while generating package metadata.
+╰─> See above for output.
+
+note: This is an issue with the package mentioned above, not pip.
+hint: See above for details.
+corleya@AidanRetry:~/project/Nausicaas-Global-Green-Initiative$ apt-get install python-psycopg2
+E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
+E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?
+corleya@AidanRetry:~/project/Nausicaas-Global-Green-Initiative$ cd ..
+corleya@AidanRetry:~/project$ cd ..
+corleya@AidanRetry:~$ cd ..
+corleya@AidanRetry:/home$ cd ..
+corleya@AidanRetry:/$ apt-get install python-psycopg2
+E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
+E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?
+corleya@AidanRetry:/$ cd ..
+corleya@AidanRetry:/$ cd root
+bash: cd: root: Permission denied
+corleya@AidanRetry:/$ dir
+bin    dev   lib    libx32	mnt   root  snap      sys  var
+boot   etc   lib32  lost+found	opt   run   srv       tmp
+cdrom  home  lib64  media	proc  sbin  swapfile  usr
+corleya@AidanRetry:/$ cd root
+bash: cd: root: Permission denied
+corleya@AidanRetry:/$ cd etc
+corleya@AidanRetry:/etc$ apt-get install python-psycopg2
+E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
+E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?
+corleya@AidanRetry:/etc$ 

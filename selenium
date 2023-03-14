@@ -1,0 +1,51 @@
+Selenium Test
+Launch Chrome
+On a seperate window - go to https://www.selenium.dev/downloads/
+Locate the Browser Chrome
+Take note of the version of Selenium in the results
+https://chrome.google.com/webstore/detail/selenium-ide/mooikfkahbdckldjjndioackbalphokd
+Add the Selenium Extension
+Open the Extension in Chrome
+Create a New Project and Record the Login Test
+Enter the Greent Giant Project URL and click Start Recording
+Selenium is now recording 
+Attempt to successfully login 
+enter Valid UserName
+Enter a valid password
+Confirm login was successful
+Stop recording
+
+Once the Extenstion is in place for any further tests locate the extension 
+and create new or edit existing tests to expand the tests
+Repeat for Firefox/Edge etc
+
+With Extension installed - Test Login
+1. Open Chrome 
+Open the Extension Selenium
+Create a new Test and Project
+Enter the Project url as the base
+Start the execution/recording of the login test
+Log in successfully 
+Stop the recording
+Locate the recording
+Run the recording and verify the login was successful
+Repeat for all other test scenarios
+e.g.
+UserName Valid + Password Valid -	Success
+UserName Blank Password Valid		Invalid
+UserName Blank Password Invalid		Invalid
+UserName Valid Password Blank		Invalid
+UserName Blank Password Valid		Invalid
+UserName Invalid + Password Valid - Invalid
+UserName Valid + Password Invalid -	Invalid
+
+Test Scenario Valid first name with 1-30 Alpha characters.
+Test Scenario Valid last name with 1-30 Alpha characters.
+Test Scenario Valid user name with 1-30 AlphaNumeric characters.
+Test Scenario Email validation xxx@xx.xxx with no min or max lengths.
+Test Scenario Address1 Required with no validations
+Test Scenario Address2 Optional with no validations
+Test Scenario Country drop down with 2 values - Ireland and United Kingdom
+Test Scenario State Optional is free text with Alpha Numeric characters - max length 20
+Test Scenario Zip required is free text with Alpha Numeric characters - max length 10
+Test Scenario We are not implementing save info for next time.
