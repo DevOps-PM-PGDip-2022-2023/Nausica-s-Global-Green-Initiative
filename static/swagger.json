@@ -1,0 +1,164 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": " API overview",
+      "version": "v1"
+    },
+    "paths": {
+      "/": {
+        "get": {
+          "operationId": "listVersionsv2",
+          "summary": "main page",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "200 response"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/team": {
+        "get": {
+          "operationId": "getVersionDetailsv2",
+          "summary": "Show API version details",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "200 response"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/customer": {
+        "get": {
+          "operationId": "getVersionDetailsv2",
+          "summary": "Show API version details",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "200 response"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/admin/main": {
+        "get": {
+          "operationId": "getVersionDetailsv2",
+          "summary": "Show API version details",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "200 response"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/admin/user/add": {
+        "get": {
+          "operationId": "getVersionDetailsv2",
+          "summary": "Show API version details",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "200 response"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/admin/user/remove": {
+        "get": {
+          "operationId": "getVersionDetailsv2",
+          "summary": "Show API version details",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "200 response"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/admin/grant/add": {
+        "get": {
+          "operationId": "getVersionDetailsv2",
+          "summary": "Show API version details",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "200 response"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/admin/grant/remove": {
+        "get": {
+          "operationId": "getVersionDetailsv2",
+          "summary": "Show API version details",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "200 response"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      }
+    },
+    "consumes": [
+      "application/json"
+    ]
+  }
