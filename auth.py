@@ -1,5 +1,16 @@
 import psycopg2
 
+#change connection info
+try:
+    conn = psycopg2.connect(
+        host="localhost",
+        database="suppliers",
+        user="postgres",
+        password="Abcd1234",
+        )
+except:
+    pass
+
 def search(username = None, password = None):
     cur = conn.cursor()
     sql = "SELECT * FROM users WHERE email = %s"
