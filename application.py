@@ -1,6 +1,5 @@
 from flask import Flask, render_template, redirect, request, session
 from flask_session import Session
-from auth import search, getrole
 from db_methods import *
 
 
@@ -10,11 +9,11 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 application = app
 
-data=""
+
 
 @app.route("/")
 def main():
-    #data = getall_grants()
+    data = getall_grants()
     if not session.get("name"):
         return redirect("/login")
     return render_template('index.html', name=session.get("name"), role=session.get("role"), data=data)
@@ -39,15 +38,60 @@ def login():
     if request.method == "POST":
         username = request.form.get("name")
         password = request.form.get("password")
-        session["name"] = username
-        return redirect("/")
-#         if search(username, password):
-#             session["name"] = username
-#             session["role"] = getrole(username, password)
-#             return redirect("/")
-#         else:
-#             return redirect("/login")
+        if search(username, password):
+            session["name"] = username
+            session["role"] = getrole(username, password)
+            return redirect("/")
+        else:
+            return redirect("/login")
     return render_template('login.html')
+
+#admin routes
+
+@app.route("/admin/main")
+def admin_main():
+    data = getall_grants()
+    if not session.get("name"):
+        return redirect("/login")
+    if not session.get("role") == "admin":
+        return redirect("/")
+    return data
+
+@app.route("/admin/user/add/<name>/<password>")
+def admin_user_add(name,password):
+    if not session.get("name"):
+        return redirect("/login")
+    if not session.get("role") == "admin":
+        return redirect("/")
+    register_user(name,password)
+    return redirect("/")
+
+@app.route("/admin/user/remove/<name>")
+def admin_user_remove(name):
+    if not session.get("name"):
+        return redirect("/login")
+    if not session.get("role") == "admin":
+        return redirect("/")
+    remove_user(name)
+    return redirect("/")
+
+@app.route("/admin/grant/add/<name>/<amount>")
+def admin_grant_add(name,amount):
+    if not session.get("name"):
+        return redirect("/login")
+    if not session.get("role") == "admin":
+        return redirect("/")
+    add_grant(name,amount)
+    return redirect("/")
+
+@app.route("/admin/grant/remove/<name>")
+def admin_grant_remove(name):
+    if not session.get("name"):
+        return redirect("/login")
+    if not session.get("role") == "admin":
+        return redirect("/")
+    remove_grant(name)
+    return redirect("/")
 
 
 if __name__ == "__main__":
