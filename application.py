@@ -37,17 +37,15 @@ def customer():
 def login():
     if request.method == "POST":
         username = request.form.get("name")
-        try:
-            if search(username):
-                session["name"] = username
-                session["role"] = getrole(username)
-                print(session["name"])
-                print(session["role"])
-                return redirect("/")
-            else:
-                return redirect("/login")
-        except:
+        if search(username):
+            session["name"] = username
+            session["role"] = getrole(username)
+            print(session["name"])
+            print(session["role"])
+            return redirect("/")
+        else:
             return redirect("/login")
+
     return render_template('login.html')
 
 #admin routes
