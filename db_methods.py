@@ -20,10 +20,10 @@ def check_db():
             
         except:
             print("I can't create the table")
-    cur.execute(""""SELECT * FROM users""")
+    cur.execute("SELECT * FROM users ")
     data = cur.fetchall()
     if data == []:
-        cur.execute(""""SELECT * FROM grants""")
+        cur.execute("SELECT * FROM grants ")
         data = cur.fetchall()
         if data == []:
             seed_db()
