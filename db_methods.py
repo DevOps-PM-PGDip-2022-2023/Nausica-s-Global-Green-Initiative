@@ -8,25 +8,32 @@ conn = mysql.connector.connect(
     user="dbadmin",
     password="12345678ab")
 
+cur = conn.cursor()
 
 def check_db():
-    cur = conn.cursor()
     cur.execute("""SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'""")
     data = cur.fetchall()
     if data == []:
         try:
             cur.execute("CREATE TABLE users (email VARCHAR(255) PRIMARY KEY, password VARCHAR(255), role VARCHAR(255));")
             cur.execute("CREATE TABLE grants (name VARCHAR(255) PRIMARY KEY, ammount INT, site VARCHAR(255));")
-            seed_db()
+            
         except:
             print("I can't create the table")
+    cur.execute(""""SELECT * FROM users""")
+    data = cur.fetchall()
+    if data == []:
+        cur.execute(""""SELECT * FROM grants""")
+        data = cur.fetchall()
+        if data == []:
+            seed_db()
+
 
     
 
 
 
 def seed_db():
-    cur = conn.cursor()
     query_user= """ INSERT INTO users (email, password, role) VALUES (%s,%s,%s)"""
     query_grant= """ INSERT INTO grants (name, ammount, site) VALUES (%s,%s,%s)"""
     user_data= [
@@ -85,7 +92,6 @@ def seed_db():
 check_db()
 
 def register_user(username=None, password=None):
-    cur = conn.cursor()
     insert_stmt = (
         "INSERT INTO users (email, password, role) "
         "VALUES (%s, %s, %s)"
@@ -96,7 +102,6 @@ def register_user(username=None, password=None):
 
 
 def patch_user(username=None, password=None, newuser=None, newpass=None):
-    cur = conn.cursor()
     sql = "SELECT * FROM users WHERE email = %s"
     adr = (username, )
     cur.execute(sql, adr)
@@ -110,7 +115,6 @@ def patch_user(username=None, password=None, newuser=None, newpass=None):
 
 
 def remove_user(username=None):
-    cur = conn.cursor()
     sql = "DELETE FROM users WHERE name = %s"
     adr = (username, )
     cur.execute(sql, adr)
@@ -120,7 +124,6 @@ def remove_user(username=None):
 # todo: add,remove,update grants method
 
 def add_grant(name=None, ammount=None, site=None):
-    cur = conn.cursor()
     insert_stmt = (
         "INSERT INTO grants (name, ammount, site) "
         "VALUES (%s, %s, %s)"
@@ -131,7 +134,6 @@ def add_grant(name=None, ammount=None, site=None):
 
 
 def patch_grant(name=None, ammount=None, newname=None, newammount=None, newsite=None):
-    cur = conn.cursor()
     sql = "SELECT * FROM grants WHERE name = %s"
     adr = (name, )
     cur.execute(sql, adr)
@@ -145,7 +147,6 @@ def patch_grant(name=None, ammount=None, newname=None, newammount=None, newsite=
 
 
 def remove_grant(name=None):
-    cur = conn.cursor()
     sql = "DELETE FROM grants WHERE name = %s"
     adr = (name, )
     cur.execute(sql, adr)
@@ -153,14 +154,12 @@ def remove_grant(name=None):
 
 
 def getall_grants():
-    cur = conn.cursor()
     sql = "SELECT * FROM grants"
     cur.execute(sql)
     return cur.fetchall()
 
 
 def search(username = None):
-    cur = conn.cursor()
     sql = "SELECT * FROM users WHERE email = %s"
     adr = (username, )
     cur.execute(sql, adr)
@@ -170,7 +169,6 @@ def search(username = None):
         return False
 
 def getrole(username = None):
-    cur = conn.cursor()
     sql = "SELECT role FROM users WHERE email = %s"
     adr = (username, )
     cur.execute(sql, adr)
