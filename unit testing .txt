@@ -1,0 +1,98 @@
+create a unit test for a website that has a customer entry page
+
+!
+Here is an example of a unit test in Python for a website that has a customer entry page:
+
+python
+Copy code
+import unittest
+from selenium import webdriver
+
+class TestCustomerEntryPage(unittest.TestCase):
+
+    def setUp(self):
+        self.driver = webdriver.Chrome()
+        self.driver.get("http://localhost:8000/customer-entry")
+
+    def test_customer_entry_successful(self):
+        # Test a successful customer entry
+        first_name_input = self.driver.find_element_by_name("first_name")
+        last_name_input = self.driver.find_element_by_name("last_name")
+		Username_input = self.driver.find_element_by_name("Username")
+		Email_input = self.driver.find_element_by_name("email")
+		Address_input = self.driver.find_element_by_name("Address")
+		Adress2_input = self.driver.find_element_by_name("Address2")
+		Country_input = self.driver.find_element_by_name("Country")
+		State_input = self.driver.find_element_by_name("State")
+		Zip_input = self.driver.find_element_by_name("ZIP")
+        submit_button = self.driver.find_element_by_name("submit")
+        first_name_input.send_keys("AidanFirst")
+        last_name_input.send_keys("Corleylast")
+		username.send_keys("AidanC")
+        email_input.send_keys("johndoe@example.com")
+		address_input.send_keys("Main Street")
+		address2_input.send_keys("Donegal Town")
+        phone_input.send_keys("1234567890")
+		country_input.send_keys("United States")
+		state_input.send_keys("California")
+		zip_input.send_keys("91210")
+        submit_button.click()
+        success_message = self.driver.find_element_by_class_name("success")
+        self.assertEqual(success_message.text, "Customer entry successful!")
+
+    def tearDown(self):
+        self.driver.quit()
+
+if __name__ == '__main__':
+    unittest.main()
+In this example, the TestCustomerEntryPage class inherits from the unittest.TestCase class and uses the Selenium WebDriver to interact with the website.
+
+The setUp method is run before each test and sets up the WebDriver to navigate to the customer entry page.
+
+The test_customer_entry_successful method tests a successful customer entry by finding the input fields for the first name, last name, email, and phone, entering valid information, and clicking the submit button. It then finds the success message on the page and asserts that the text is "Customer entry successful!".
+
+The tearDown method is run after each test and quits the WebDriver.
+
+Note that in this example, the website is assumed to be running on http://localhost:5000/customer-entry. You would need to update this URL to match the actual URL of your website. Additionally, you may need to set up any necessary dependencies or fixtures before running
+
+
+import unittest
+from selenium import webdriver
+
+class TestCustomerEntryPage(unittest.TestCase):
+
+    def setUp(self):
+        self.driver = webdriver.Chrome()
+        self.driver.get("http://localhost:8000/customer-entry")
+
+    def test_customer_entry_successful(self):
+        # Test a successful customer entry
+        first_name_input = self.driver.find_element_by_name("first_name")
+        last_name_input = self.driver.find_element_by_name("last_name")
+		Username_input = self.driver.find_element_by_name("Username")
+		Email_input = self.driver.find_element_by_name("email")
+		Address_input = self.driver.find_element_by_name("Address")
+		Address2_input = self.driver.find_element_by_name("Address2")
+		Country_input = self.driver.find_element_by_name("Country")
+		State_input = self.driver.find_element_by_name("State")
+		Zip_input = self.driver.find_element_by_name("ZIP")
+        email_input = self.driver.find_element_by_name("email")
+        submit_button = self.driver.find_element_by_name("submit")
+        first_name_input.send_keys("")
+        last_name_input.send_keys("")
+		username.send_keys("")
+        email_input.send_keys("")
+		address_input.send_keys("")
+		address2_input.send_keys("")
+		country_input.send_keys("")
+		state_input.send_keys("")
+		zip_input.send_keys("")
+        submit_button.click()
+        success_message = self.driver.find_element_by_class_name("success")
+        self.assertEqual(success_message.text, "Customer entry successful!")
+
+    def tearDown(self):
+        self.driver.quit()
+
+if __name__ == '__main__':
+    unittest.main()
