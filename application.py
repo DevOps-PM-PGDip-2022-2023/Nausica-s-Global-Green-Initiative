@@ -16,6 +16,7 @@ def main():
     if not session.get("name"):
         return redirect("/login")
     data = getall_grants()
+    print (data)
     return render_template('userdetails.html', name=session.get("name"), role=session.get("role"), data=data)
 
 
