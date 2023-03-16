@@ -13,9 +13,9 @@ application = app
 
 @app.route("/")
 def main():
-    data = getall_grants()
     if not session.get("name"):
         return redirect("/login")
+    data = getall_grants()
     return render_template('userdetails.html', name=session.get("name"), role=session.get("role"), data=data)
 
 
@@ -48,7 +48,7 @@ def login():
                 return redirect("/login")
         except:
             return redirect("/login")
-    return redirect("/login")
+    return render_template('login.html')
 
 #admin routes
 
