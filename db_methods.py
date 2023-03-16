@@ -1,8 +1,8 @@
 
-import psycopg2
+import mysql.connector
 
 # change connection info
-conn = psycopg2.connect(
+conn = mysql.connector.connect(
     host="green-giants.cluster-cvyu518jf2zy.eu-west-1.rds.amazonaws.com",
     database="GreenGiants",
     user="dbadmin",
@@ -13,17 +13,14 @@ def check_db():
     cur = conn.cursor()
     cur.execute("""SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'""")
     data = cur.fetchall()
-    if not "user" in data:
+    if data == []:
         try:
-            cur.execute("CREATE TABLE users (email varchar PRIMARY KEY, password varchar, role varchar);")
-        except:
-            print("I can't create the table")
-    if not "grant" in data:
-        try:
-            cur.execute("CREATE TABLE grants (name varchar PRIMARY KEY, ammount integer);")
+            cur.execute("CREATE TABLE users (email VARCHAR(255) PRIMARY KEY, password VARCHAR(255), role VARCHAR(255));")
+            cur.execute("CREATE TABLE grants (name VARCHAR(255) PRIMARY KEY, ammount INT, site VARCHAR(255));")
             seed_db()
         except:
             print("I can't create the table")
+
     
 
 
@@ -79,9 +76,11 @@ def seed_db():
     for i in user_data:
         record = (i['email'], i['password'], i['role'])
         cur.execute(query_user, record)
+        conn.commit()
     for i in grant_data:
         record = (i['name'],i['ammount'],i['site'])
         cur.execute(query_grant, record)
+        conn.commit()
 
 check_db()
 
@@ -93,6 +92,7 @@ def register_user(username=None, password=None):
     )
     data = (username, password, "user")
     cur.execute(insert_stmt, data)
+    conn.commit()
 
 
 def patch_user(username=None, password=None, newuser=None, newpass=None):
@@ -106,6 +106,7 @@ def patch_user(username=None, password=None, newuser=None, newpass=None):
         sql = "UPDATE users SET email = %s WHERE email = %s"
         val = (newuser, newpass)
         cur.execute(sql, val)
+        conn.commit()
 
 
 def remove_user(username=None):
@@ -113,6 +114,7 @@ def remove_user(username=None):
     sql = "DELETE FROM users WHERE name = %s"
     adr = (username, )
     cur.execute(sql, adr)
+    conn.commit()
 
 
 # todo: add,remove,update grants method
@@ -125,6 +127,7 @@ def add_grant(name=None, ammount=None, site=None):
     )
     data = (name, ammount, site)
     cur.execute(insert_stmt, data)
+    conn.commit()
 
 
 def patch_grant(name=None, ammount=None, newname=None, newammount=None, newsite=None):
@@ -138,6 +141,7 @@ def patch_grant(name=None, ammount=None, newname=None, newammount=None, newsite=
         sql = "UPDATE grants SET name = %s WHERE name = %s"
         val = (name, ammount)
         cur.execute(sql, val)
+        conn.commit()
 
 
 def remove_grant(name=None):
@@ -145,6 +149,7 @@ def remove_grant(name=None):
     sql = "DELETE FROM grants WHERE name = %s"
     adr = (name, )
     cur.execute(sql, adr)
+    conn.commit()
 
 
 def getall_grants():
@@ -153,7 +158,8 @@ def getall_grants():
     cur.execute(sql)
     return cur.fetchall()
 
-def search(username = None, password = None):
+
+def search(username = None):
     cur = conn.cursor()
     sql = "SELECT * FROM users WHERE email = %s"
     adr = (username, )
@@ -173,7 +179,3 @@ def getrole(username = None):
         return "user"
     else:
         return str(resp[0])
-    
-def data_load():
-
-    pass

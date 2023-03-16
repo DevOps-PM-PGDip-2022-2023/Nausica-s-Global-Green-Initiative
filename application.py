@@ -16,7 +16,7 @@ def main():
     data = getall_grants()
     if not session.get("name"):
         return redirect("/login")
-    return render_template('index.html', name=session.get("name"), role=session.get("role"), data=data)
+    return render_template('userdetails.html', name=session.get("name"), role=session.get("role"), data=data)
 
 
 @app.route("/team")
@@ -37,10 +37,10 @@ def customer():
 def login():
     if request.method == "POST":
         username = request.form.get("name")
-        password = request.form.get("password")
-        if search(username, password):
+        if search(username):
             session["name"] = username
-            session["role"] = getrole(username, password)
+            print(getrole(username))
+            session["role"] = getrole(username)
             return redirect("/")
         else:
             return redirect("/login")
