@@ -163,7 +163,7 @@ def search(username = None):
     sql = "SELECT * FROM users WHERE email = %s"
     adr = (username, )
     cur.execute(sql, adr)
-    if len(cur.fetchall()) == 0:
+    if len(cur.fetchall()) == 1:
         return True
     else:
         return False
