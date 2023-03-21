@@ -1,0 +1,31 @@
+ As an admin user
+  I want to be able to log into the GreenGiants system
+  So that I can access my account and use the system
+
+  Scenario: Successful login
+    Given I am on the login page
+    When I enter valid login credentials e.g. aidan@test.com
+    And I click the Submit button
+    Then I should be logged in to my account
+
+  Scenario: Invalid credentials
+    Given I am on the login page
+    When I enter invalid login credentials
+    And I click the Submit button
+    Then I should see an error message indicating that my login was unsuccessful
+
+  Scenario: Empty credentials
+    Given I am on the login page
+    When I leave the username and/or password fields blank
+    And I click the Submit button
+    Then I should see an error message indicating that the fields cannot be left blank
+
+  Scenario: Forgotten password
+    Given I am on the login page
+    When I click the "forgot password" link
+    Then I should be directed to the password reset page
+
+  Scenario: Create new account
+    Given I am on the login page
+    When I click the "create new account" link
+    Then I should be directed to the account registration page
