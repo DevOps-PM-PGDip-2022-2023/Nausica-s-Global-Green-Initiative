@@ -20,6 +20,7 @@ def check_db():
         try:
             cur.execute("CREATE TABLE users (email VARCHAR(255) PRIMARY KEY, password VARCHAR(255), role VARCHAR(255));")
             cur.execute("CREATE TABLE grants (name VARCHAR(255) PRIMARY KEY, ammount INT, site VARCHAR(255));")
+            cur.execute("CREATE TABLE applications (name VARCHAR(255) PRIMARY KEY, grant_name VARCHAR(255), ammount INT);")
             
         except:
             print("I can't create the table")
@@ -150,6 +151,23 @@ def remove_user(username=None):
 
 # todo: add,remove,update grants method
 
+def add_app(name=None, grant_name=None, ammount=None):
+    """
+    It takes three arguments, and inserts them into the database
+    
+    :param name: The name of the grant
+    :param ammount: The ammount of money the grant is worth
+    :param site: The site where the grant is located
+    """
+    insert_stmt = (
+        "INSERT INTO grants (name, grant_name, ammount) "
+        "VALUES (%s, %s, %s)"
+    )
+    data = (name, grant_name, ammount)
+    cur.execute(insert_stmt, data)
+    conn.commit()
+
+
 def add_grant(name=None, ammount=None, site=None):
     """
     It takes three arguments, and inserts them into the database
@@ -223,6 +241,24 @@ def search(username = None):
     """
     sql = "SELECT * FROM users WHERE email = %s"
     adr = (username, )
+    cur.execute(sql, adr)
+    if len(cur.fetchall()) == 1:
+        return True
+    else:
+        return False
+    
+
+    
+def search_grant_ammount(name = None, ammount = None):
+    """
+    It takes a username as an argument, and returns True if the username is in the database, and False
+    if it isn't
+    
+    :param username: The username of the user you want to search for
+    :return: True or False
+    """
+    sql = "SELECT * FROM grants WHERE name = %s AND ammount = %s "
+    adr = (name, ammount)
     cur.execute(sql, adr)
     if len(cur.fetchall()) == 1:
         return True
