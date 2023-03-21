@@ -1,5 +1,5 @@
 {
-    "swagger": "2.0",
+    "openapi": "3.0.0",
     "info": {
       "title": " API overview",
       "version": "v1"
@@ -7,7 +7,6 @@
     "paths": {
       "/": {
         "get": {
-          "operationId": "listVersionsv2",
           "summary": "main page",
           "produces": [
             "application/json"
@@ -26,7 +25,6 @@
       },
       "/team": {
         "get": {
-          "operationId": "getVersionDetailsv2",
           "summary": "Show API version details",
           "produces": [
             "application/json"
@@ -45,7 +43,6 @@
       },
       "/customer": {
         "get": {
-          "operationId": "getVersionDetailsv2",
           "summary": "Show API version details",
           "produces": [
             "application/json"
@@ -57,6 +54,24 @@
             },
             "300": {
               "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/datapull": {
+        "get": {
+          "summary": "draws all Grants within DB",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+              
+            },
+            "300": {
+              "description": "bad request"
               
             }
           }
@@ -65,7 +80,7 @@
       "/admin/main": {
         "get": {
           "operationId": "getVersionDetailsv2",
-          "summary": "Show API version details",
+          "summary": "Show all grants",
           "produces": [
             "application/json"
           ],
@@ -81,16 +96,30 @@
           }
         }
       },
-      "/admin/user/add": {
-        "get": {
-          "operationId": "getVersionDetailsv2",
-          "summary": "Show API version details",
-          "produces": [
-            "application/json"
-          ],
+      "/admin/user/add/{name}/{password}": {
+        "post": {
+          "summary": "add user to db",
+          "parameters": [{
+            "name": "name",
+            "in": "path",
+            "description": "db user name",
+            "required": true,
+            "type": "string"
+
+            
+          },{
+            "name": "password",
+            "in": "path",
+            "description": "db user name",
+            "required": true,
+            "type": "string"
+
+            
+          }],
+          
           "responses": {
             "200": {
-              "description": "200 response"
+              "description": "OK"
               
             },
             "300": {
@@ -100,16 +129,22 @@
           }
         }
       },
-      "/admin/user/remove": {
-        "get": {
-          "operationId": "getVersionDetailsv2",
-          "summary": "Show API version details",
-          "produces": [
-            "application/json"
-          ],
+      "/admin/user/remove/{name}": {
+        "post": {
+          "summary": "remove user from db",
+          "parameters": [{
+            "name": "name",
+            "in": "path",
+            "description": "db user name",
+            "required": true,
+            "type": "string"
+
+            
+          }],
+          
           "responses": {
             "200": {
-              "description": "200 response"
+              "description": "OK"
               
             },
             "300": {
@@ -119,16 +154,38 @@
           }
         }
       },
-      "/admin/grant/add": {
-        "get": {
-          "operationId": "getVersionDetailsv2",
-          "summary": "Show API version details",
-          "produces": [
-            "application/json"
-          ],
+      "/admin/grant/add/{name}/{amount}/{site}": {
+        "post": {
+          "summary": "add grant to db",
+          "parameters": [{
+            "name": "name",
+            "in": "path",
+            "description": "db grant name",
+            "required": true,
+            "type": "string"
+
+            
+          },{
+            "name": "amount",
+            "in": "path",
+            "description": "db grant amount",
+            "required": true,
+            "type": "integer"
+            
+            
+          },{
+            "name": "site",
+            "in": "path",
+            "description": "db grant website",
+            "required": true,
+            "type": "string"
+
+            
+          }],
+          
           "responses": {
             "200": {
-              "description": "200 response"
+              "description": "OK"
               
             },
             "300": {
@@ -138,16 +195,22 @@
           }
         }
       },
-      "/admin/grant/remove": {
-        "get": {
-          "operationId": "getVersionDetailsv2",
-          "summary": "Show API version details",
-          "produces": [
-            "application/json"
-          ],
+      "/admin/grant/remove/{name}": {
+        "post": {
+          "summary": "remove grant from db",
+          "parameters": [{
+            "name": "name",
+            "in": "path",
+            "description": "db grant name",
+            "required": true,
+            "type": "string"
+
+            
+          }],
+          
           "responses": {
             "200": {
-              "description": "200 response"
+              "description": "OK"
               
             },
             "300": {

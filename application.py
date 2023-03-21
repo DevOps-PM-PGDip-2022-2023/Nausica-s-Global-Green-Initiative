@@ -1,6 +1,7 @@
-from flask import Flask, render_template, redirect, request, session
+from flask import Flask, render_template, redirect, request, session, make_response, jsonify
 from flask_session import Session
 from db_methods import *
+from flask_swagger_ui import get_swaggerui_blueprint
 
 
 app = Flask(__name__)
@@ -9,14 +10,22 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 application = app
 
-
+SWAGGER_URL = '/swagger'
+API_URL = '/static/swagger.json'
+SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "Nausicaas-Global-Green-Initiative API"
+    }
+)
+app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
 
 @app.route("/")
 def main():
     if not session.get("name"):
         return redirect("/login")
     data = getall_grants()
-    print (data)
     return render_template('userdetails.html', name=session.get("name"), role=session.get("role"), data=data)
 
 
@@ -49,7 +58,7 @@ def login():
 
 #admin routes
 
-@app.route("/admin/main")
+@app.route("/admin/main",methods=["GET"])
 def admin_main():
     data = getall_grants()
     if not session.get("name"):
@@ -58,7 +67,7 @@ def admin_main():
         return redirect("/")
     return data
 
-@app.route("/admin/user/add/<name>/<password>")
+@app.route("/admin/user/add/<name>/<password>", methods=["POST"])
 def admin_user_add(name,password):
     if not session.get("name"):
         return redirect("/login")
@@ -67,7 +76,7 @@ def admin_user_add(name,password):
     register_user(name,password)
     return redirect("/")
 
-@app.route("/admin/user/remove/<name>")
+@app.route("/admin/user/remove/<name>", methods=["POST"])
 def admin_user_remove(name):
     if not session.get("name"):
         return redirect("/login")
@@ -76,16 +85,16 @@ def admin_user_remove(name):
     remove_user(name)
     return redirect("/")
 
-@app.route("/admin/grant/add/<name>/<amount>")
-def admin_grant_add(name,amount):
+@app.route("/admin/grant/add/<name>/<amount>/<site>", methods=["POST"])
+def admin_grant_add(name,amount,site):
     if not session.get("name"):
         return redirect("/login")
     if not session.get("role") == "admin":
         return redirect("/")
-    add_grant(name,amount)
+    add_grant(name,amount,site)
     return redirect("/")
 
-@app.route("/admin/grant/remove/<name>")
+@app.route("/admin/grant/remove/<name>", methods=["POST"])
 def admin_grant_remove(name):
     if not session.get("name"):
         return redirect("/login")
@@ -93,6 +102,14 @@ def admin_grant_remove(name):
         return redirect("/")
     remove_grant(name)
     return redirect("/")
+
+@app.route("/datapull", methods=["GET"])
+def datapull():
+    if not session.get("name"):
+        data = {"message":"bad request"}
+        return make_response(jsonify(data), 500)
+    data = getall_grants()
+    return make_response(jsonify(data), 200)
 
 
 if __name__ == "__main__":
