@@ -231,7 +231,7 @@ def getall_grants():
     return cur.fetchall()
 
 
-def search(username = None):
+def search(username = None, password = None):
     """
     It takes a username as an argument, and returns True if the username is in the database, and False
     if it isn't
@@ -239,8 +239,8 @@ def search(username = None):
     :param username: The username of the user you want to search for
     :return: True or False
     """
-    sql = "SELECT * FROM users WHERE email = %s"
-    adr = (username, )
+    sql = "SELECT * FROM users WHERE email = %s AND password = %s"
+    adr = (username, password)
     cur.execute(sql, adr)
     if len(cur.fetchall()) == 1:
         return True

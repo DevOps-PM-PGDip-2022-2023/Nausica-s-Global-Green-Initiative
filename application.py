@@ -82,7 +82,7 @@ def login():
             return redirect("/login")
     return render_template('login.html')
 
-@app.route("/user/<grant_name>/<ammount>", methods=["POST", "GET"])
+@app.route("/application/<grant_name>/<ammount>", methods=["POST", "GET"])
 def application(grant_name,ammount):
     """
     If the request method is POST, then get the username from the form, 
@@ -102,6 +102,26 @@ def application(grant_name,ammount):
             return redirect("/")
     except:
         return redirect("/")
+    
+@app.route("/register/<email>/<password>", methods=["POST", "GET"])
+def register(email,password):
+    """
+    If the request method is POST, then get the username from the form, 
+    print the result of the search function, 
+    if the search function returns true, then set the session name to the username, 
+    set the session role to the result of the getrole function, 
+    and redirect to the home page, 
+    otherwise redirect to the login page. 
+    Finally, render the login page.
+    :return: the rendered template.
+    """
+    try:
+        register_user(email,password)
+        return redirect("/")
+    except:
+        return redirect("/login")
+    
+
 
 
 #admin routes
