@@ -33,9 +33,9 @@ resource "aws_rds_cluster" "aurora_cluster" {
 }
 
 resource "aws_rds_cluster_instance" "aurora_cluster_instance" {
-  identifier         = "green-giants"
-  cluster_identifier = aws_rds_cluster.aurora_cluster.id
-  instance_class     = "db.t3.small"
+  identifier          = "green-giants"
+  cluster_identifier  = aws_rds_cluster.aurora_cluster.id
+  instance_class      = "db.t3.small"
   publicly_accessible = true
 
   tags = local.tags
