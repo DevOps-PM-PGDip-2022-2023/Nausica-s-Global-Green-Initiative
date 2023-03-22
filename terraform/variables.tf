@@ -1,11 +1,11 @@
 ###### Access Key Setup #########
 variable "access_key" {
   description = "Access key to AWS console"
-  default     = "AKIA3BQR4NR5ZI35EH7E"
+  default     = ""
 }
 variable "secret_key" {
   description = "Secret key to AWS console"
-  default     = "nRbXUIY5bosa6IaHnFMJAQOxlKDcm3eHb9TugU"
+  default     = ""
 }
 
 ###### EC2 Instance Setup ########
