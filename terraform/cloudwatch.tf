@@ -77,7 +77,8 @@ resource "aws_cloudwatch_metric_alarm" "EC2_CPU_Usage_Alarm" {
 
 resource "aws_cloudwatch_log_group" "ec2_log_group" {
   name = "ec2_log_group"
-  
+}
+
 resource "aws_cloudwatch_log_group" "ebs_log_group" {
   name = "ebs_log_group"
   retention_in_days = 7
@@ -86,6 +87,7 @@ resource "aws_cloudwatch_log_group" "ebs_log_group" {
 resource "aws_cloudwatch_log_stream" "ec2_log_stream" {
   name = "ec2_log_stream"
   log_group_name = aws_cloudwatch_log_group.ec2_log_group.name
+}
 
 resource "aws_cloudwatch_log_stream" "ebs_log_stream" {
   name = "ebs_log_stream"
