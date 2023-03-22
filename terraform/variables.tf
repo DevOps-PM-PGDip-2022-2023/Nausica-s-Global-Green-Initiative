@@ -1,9 +1,11 @@
 ###### Access Key Setup #########
 variable "access_key" {
   description = "Access key to AWS console"
+  default     = "AKIA3BQR4NR5ZI35EH7E"
 }
 variable "secret_key" {
   description = "Secret key to AWS console"
+  default     = "nRbXUIY5bosa6IaHnFMJAQOxlKDcm3eHb9TugU"
 }
 
 ###### EC2 Instance Setup ########
@@ -72,6 +74,14 @@ variable "rds_master_username" {
 variable "rds_master_password" {
   description = "The ID's of the VPC subnets that the RDS cluster instances will be created in"
   default     = "12345"
+}
+
+###### s3 Setup ########
+
+variable "bucket_name" {
+  type        = string
+  description = "Provide the name to give an S3 bucket for Terraform to deploy."
+  default     = "green-giants"
 }
 
 ########################
