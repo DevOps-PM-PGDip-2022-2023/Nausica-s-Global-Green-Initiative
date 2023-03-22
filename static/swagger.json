@@ -1,0 +1,293 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": " API overview",
+      "version": "v1"
+    },
+    "paths": {
+      "/": {
+        "get": {
+          "summary": "main page",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "200 response"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/team": {
+        "get": {
+          "summary": "Show API version details",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "200 response"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/customer": {
+        "get": {
+          "summary": "Show API version details",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "200 response"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/datapull": {
+        "get": {
+          "summary": "draws all Grants within DB",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+              
+            },
+            "300": {
+              "description": "bad request"
+              
+            }
+          }
+        }
+      },
+      "/admin/main": {
+        "get": {
+          "operationId": "getVersionDetailsv2",
+          "summary": "Show all grants",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "200 response"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/application/<grant_name>/<ammount>": {
+        "post": {
+          "summary": "add application to db",
+          "parameters": [{
+            "name": "grant_name",
+            "in": "path",
+            "description": "db grant name",
+            "required": true,
+            "type": "string"
+
+            
+          },{
+            "name": "ammount",
+            "in": "path",
+            "description": "db grant ammount",
+            "required": true,
+            "type": "string"
+
+            
+          }],
+          
+          "responses": {
+            "200": {
+              "description": "OK"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/register/<email>/<password>": {
+        "post": {
+          "summary": "add user to db",
+          "parameters": [{
+            "name": "email",
+            "in": "path",
+            "description": "db user name",
+            "required": true,
+            "type": "string"
+
+            
+          },{
+            "name": "password",
+            "in": "path",
+            "description": "db user name",
+            "required": true,
+            "type": "string"
+
+            
+          }],
+          
+          "responses": {
+            "200": {
+              "description": "OK"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/admin/user/add/{name}/{password}": {
+        "post": {
+          "summary": "add user to db",
+          "parameters": [{
+            "name": "name",
+            "in": "path",
+            "description": "db user name",
+            "required": true,
+            "type": "string"
+
+            
+          },{
+            "name": "password",
+            "in": "path",
+            "description": "db user name",
+            "required": true,
+            "type": "string"
+
+            
+          }],
+          
+          "responses": {
+            "200": {
+              "description": "OK"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/admin/user/remove/{name}": {
+        "post": {
+          "summary": "remove user from db",
+          "parameters": [{
+            "name": "name",
+            "in": "path",
+            "description": "db user name",
+            "required": true,
+            "type": "string"
+
+            
+          }],
+          
+          "responses": {
+            "200": {
+              "description": "OK"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/admin/grant/add/{name}/{amount}/{site}": {
+        "post": {
+          "summary": "add grant to db",
+          "parameters": [{
+            "name": "name",
+            "in": "path",
+            "description": "db grant name",
+            "required": true,
+            "type": "string"
+
+            
+          },{
+            "name": "amount",
+            "in": "path",
+            "description": "db grant amount",
+            "required": true,
+            "type": "integer"
+            
+            
+          },{
+            "name": "site",
+            "in": "path",
+            "description": "db grant website",
+            "required": true,
+            "type": "string"
+
+            
+          }],
+          
+          "responses": {
+            "200": {
+              "description": "OK"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      },
+      "/admin/grant/remove/{name}": {
+        "post": {
+          "summary": "remove grant from db",
+          "parameters": [{
+            "name": "name",
+            "in": "path",
+            "description": "db grant name",
+            "required": true,
+            "type": "string"
+
+            
+          }],
+          
+          "responses": {
+            "200": {
+              "description": "OK"
+              
+            },
+            "300": {
+              "description": "300 response"
+              
+            }
+          }
+        }
+      }
+    },
+    "consumes": [
+      "application/json"
+    ]
+  }
