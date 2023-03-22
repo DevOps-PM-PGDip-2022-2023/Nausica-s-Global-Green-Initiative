@@ -19,11 +19,11 @@ resource "aws_rds_cluster" "aurora_cluster" {
   cluster_identifier           = "green-giants"
   database_name                = "GreenGiants"
   master_username              = "dbadmin"
-  master_password              = "12345678ab" #this will be change after the resource is created"
+  master_password              = "12345678ab" #to be encrypted
   backup_retention_period      = 0
   preferred_backup_window      = "02:00-03:00"
   preferred_maintenance_window = "wed:03:00-wed:04:00"
-  # availability_zones           = ["eu-west-1"] #error when applying in eurorpe
+  # availability_zones           = ["eu-west-1"] 
   skip_final_snapshot = true
   deletion_protection = false
   #db_subnet_group_name          = "${aws_db_subnet_group.aurora_subnet_group.name}"
