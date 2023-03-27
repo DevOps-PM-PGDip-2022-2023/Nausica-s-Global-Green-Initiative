@@ -46,6 +46,16 @@ def team():
         return redirect("/login")
     return render_template('Teamdetails.html', name=session.get("name"), role=session.get("role"))
 
+@app.route("/requirement")
+def requirement():
+    """
+    If the user is not logged in, redirect them to the login page. Otherwise, render the
+    Teamdetails.html template
+    :return: the rendered template.
+    """
+    if not session.get("name"):
+        return redirect("/login")
+    return render_template('index.html', name=session.get("name"), role=session.get("role"))
 
 @app.route("/customer")
 def customer():
