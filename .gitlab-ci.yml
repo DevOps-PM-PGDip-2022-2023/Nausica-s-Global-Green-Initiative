@@ -49,7 +49,7 @@ build:
     paths:
       -  /builds/GreenG/Nausicaas-Global-Green-Initiative/buildfile.zip
 
-validate:
+.validate:
   stage: validate
   script:
     - cd terraform
@@ -60,7 +60,7 @@ validate:
   allow_failure: false
   when: manual
     
-plan:
+.plan:
   stage: plan
   script:
     - cd terraform
@@ -90,7 +90,7 @@ ebsPlan:
       - /builds/GreenG/Nausicaas-Global-Green-Initiative/terraform/planfile
   when: manual
        
-apply:
+.apply:
   stage: apply
   script:
     - cd terraform
