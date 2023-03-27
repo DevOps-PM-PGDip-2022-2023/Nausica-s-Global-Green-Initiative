@@ -75,7 +75,7 @@ build:
       - /builds/GreenG/Nausicaas-Global-Green-Initiative/terraform/planfile
   when: manual
 
-ebsPlan:
+.ebsPlan:
   stage: plan
   script:
     - cd terraform
