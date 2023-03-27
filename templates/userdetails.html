@@ -13,10 +13,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	
 	
-   <link rel="stylesheet" type= "text/css" href= "staticfiles/styles.css">
+   <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
 
     <script>
       const items = [["Future Growth Loan Scheme", 80000000, "https://enterprise.gov.ie/en/What-We-Do/Supports-for-SMEs/Access-to-Finance/Future-Growth-Loan-Scheme/"], ["Help to Buy Scheme", 30000, "https://www.citizensinformation.ie/en/housing/owning_a_home/help_with_buying_a_home/help_to_buy_incentive.html"]];
+      const items2 = "{{data}}";
+      console.log(items2)
       const items1 = arrayToJSONObject(items);
 
       function loadTableData(items) {
@@ -37,7 +39,7 @@
 
       function arrayToJSONObject(arr) {
         //header
-        var keys = ["Scheme", "Price", "Url"];
+        var keys = ["Scheme", "Url", "Price"];
  
 
         var formatted = [],
@@ -96,7 +98,7 @@
         
         <div class="col-md-12 order-md-1">
        
-            <h1 class="headertitle">User Details</h1> 
+            <h1 class="headertitle">Scheme Details</h1> 
             
             <table id="myTable" class="table table-borderless table-striped table-earning">
               <thead>
