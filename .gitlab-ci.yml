@@ -57,6 +57,8 @@ validate:
     - terraform --version
     - terraform init
     - terraform validate
+  allow_failure: false
+  when: manual
     
 plan:
   stage: plan
