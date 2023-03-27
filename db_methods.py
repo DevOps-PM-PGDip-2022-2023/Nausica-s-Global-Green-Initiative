@@ -239,13 +239,16 @@ def search(username = None, password = None):
     :param username: The username of the user you want to search for
     :return: True or False
     """
-    sql = "SELECT * FROM users WHERE email = %s AND password = %s"
-    adr = (username, password)
-    cur.execute(sql, adr)
-    if len(cur.fetchall()) == 1:
-        return True
-    else:
-        return False
+    
+    sql = "SELECT * FROM users"
+    cur.execute(sql,)
+    for i in cur.fetchall():
+        if str(username == i[0]):
+            if str(password == i[1]):
+                return True
+    return False
+
+    
     
 
     

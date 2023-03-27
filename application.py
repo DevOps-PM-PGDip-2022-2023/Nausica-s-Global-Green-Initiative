@@ -73,7 +73,8 @@ def login():
     """
     if request.method == "POST":
         username = request.form.get("name")
-        print(search(username))
+        password = request.form.get("password")
+        search(username,password)
         if search(username):
             session["name"] = username
             session["role"] = getrole(username)
