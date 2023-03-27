@@ -35,9 +35,9 @@ Regex for cleansing and validation of data before sending to the database.
 # Useful Links
  - Project Slack: https://atudevops.slack.com/archives/C04ETS0CLJV
  - GitHub: https://github.com/DevOps-PM-PGDip-2022-2023/Nausicaas-Global-Green-Initiative
-EasyRetro | Improve your team with fun sprint retrospectives https://easyretro.io/publicboard/4dbxdGABPHeYondyMoldWXrgJRP2/e910232b-de78-41bb-8e6e-fa662582aa68
+EasyRetro https://easyretro.io/publicboard/4dbxdGABPHeYondyMoldWXrgJRP2/e910232b-de78-41bb-8e6e-fa662582aa68
 JIRA - https://l00177576-devops.atlassian.net/jira/software/projects/GGI/boards/3
-Home - Confluence (atlassian.net) https://l00177576-devops.atlassian.net/wiki/home 
+Confluence https://l00177576-devops.atlassian.net/wiki/home 
 
 
 # Section	Description
