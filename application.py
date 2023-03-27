@@ -84,7 +84,7 @@ def login():
     return render_template('login.html')
 
 @app.route("/application/<grant_name>/<ammount>", methods=["POST", "GET"])
-def application(grant_name,ammount):
+def get_grant(grant_name,ammount):
     """
     If the request method is POST, then get the username from the form, 
     print the result of the search function, 
