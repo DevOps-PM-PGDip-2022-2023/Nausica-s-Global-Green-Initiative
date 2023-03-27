@@ -6,8 +6,9 @@ variables:
   AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
   AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
   AWS_REGION: eu-west-1
+  AWS_REGION_S3: eu-west-1
   AWS_PLATFORM: Python
-  BUILD_PATH : /builds/greengiant1/Nausicaas-Global-Green-Initiative/buildfile.zip
+  BUILD_PATH : /builds/GreenG/Nausicaas-Global-Green-Initiative/buildfile.zip
 stages:
   - build
   - validate
@@ -46,7 +47,7 @@ build:
     - ls
   artifacts:
     paths:
-      -  /builds/greengiant1/Nausicaas-Global-Green-Initiative/buildfile.zip
+      -  /builds/GreenG/Nausicaas-Global-Green-Initiative/buildfile.zip
 
 validate:
   stage: validate
@@ -69,8 +70,24 @@ plan:
     - validate
   artifacts:
     paths:
-      - /builds/greengiant1/Nausicaas-Global-Green-Initiative/terraform/planfile
-      
+      - /builds/GreenG/Nausicaas-Global-Green-Initiative/terraform/planfile
+  when: manual
+
+ebsPlan:
+  stage: plan
+  script:
+    - cd terraform
+    - rm -rf .terraform
+    - terraform --version
+    - terraform init
+    - terraform plan -target=aws_elastic_beanstalk_application.application -target=aws_elastic_beanstalk_environment.environment -out "planfile"
+  dependencies:
+    - validate
+  artifacts:
+    paths:
+      - /builds/GreenG/Nausicaas-Global-Green-Initiative/terraform/planfile
+  when: manual
+       
 apply:
   stage: apply
   script:
@@ -80,27 +97,8 @@ apply:
     - terraform init
     - terraform apply -input=false "planfile"
   dependencies:
-    - plan
-  when: manual
-
-# deploy:
-#   image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
-#   stage: deploy
-#   script:
-#     - cd ..
-#     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-#     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-#     - aws configure set region us-east-1
-#     - aws s3 cp $BUILD_PATH s3://$s3_bucket_uri
-#     # - aws elasticbeanstalk create-application-version --application-name GreenGiants --version-label $CI_COMMIT_SHORT_SHA --source-bundle S3Bucket= "websever-opensauce" ,S3Key="buildfile.zip" --auto-create-application
-#     - aws elasticbeanstalk create-application-version --application-name YourEBSAppName --version-label YourVersionLabel --source-bundle S3Bucket=$s3_bucket_uri,S3Key="buildfile.zip" 
-#     - aws elasticbeanstalk update-environment --application-name YourEBSAppName --environment-name YourEBSEnvironmentName --version-label YourVersionLabel
-#     # - aws elasticbeanstalk update-environment --application-name mySampleApp --environment-name mySampleApp-env --version-label $CI_COMMIT_SHORT_SHA
-#     # - aws elasticbeanstalk update-environment --application-name GreenGiants --environment-name GreenGiants --version-label  $CI_COMMIT_SHORT_SHA
-#   dependencies:
-#     - build
-
-#   when: manual
+    - ebsPlan
+  when: manual 
 
 
 create_eb_version:
@@ -123,7 +121,7 @@ create_eb_version:
       --application-name ${APP_NAME} \
       --version-label $AWS_VERSION_LABEL \
       --region ${AWS_REGION} \
-      --source-bundle S3Bucket="websever-opensauce",S3Key="buildfile.zip" \
+      --source-bundle S3Bucket=${s3_bucket_uri},S3Key="buildfile.zip" \
       --description "${CI_COMMIT_DESCRIPTION}" \
       --auto-create-application \
 
@@ -135,29 +133,28 @@ create_eb_version:
       --region ${AWS_REGION} \
       --version-label $AWS_VERSION_LABEL \
       --solution-stack-name "64bit Amazon Linux 2 v3.4.4 running Python 3.8"
-  # only:
-  #   refs:
-  #     - master
+  when: manual
+
+
 
 deploy_aws_eb:
   stage: deploy
   image: coxauto/aws-ebcli
-  when: manual
   script: |
     ls
     echo "init app"
     echo \n | eb init -i ${APP_NAME} -p ${AWS_PLATFORM}  --region ${AWS_REGION}
     echo "deploy app"
     eb deploy ${APP_NAME} 
-  # only:
-  #   refs:
-  #     - master
+  when: manual
+  
 
 destroy:
   stage: destroy
   script:
     - cd terraform
-    - rm -rf .terraform
+    # - rm -rf .terraform
+    - ls
     - terraform --version
     - terraform init
     - terraform plan -destroy -out destroyplan
