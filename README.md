@@ -35,9 +35,10 @@ Regex for cleansing and validation of data before sending to the database.
 # Useful Links
  - Project Slack: https://atudevops.slack.com/archives/C04ETS0CLJV
  - GitHub: https://github.com/DevOps-PM-PGDip-2022-2023/Nausicaas-Global-Green-Initiative
+EasyRetro | Improve your team with fun sprint retrospectives https://easyretro.io/publicboard/4dbxdGABPHeYondyMoldWXrgJRP2/e910232b-de78-41bb-8e6e-fa662582aa68
+JIRA - https://l00177576-devops.atlassian.net/jira/software/projects/GGI/boards/3
+Home - Confluence (atlassian.net) https://l00177576-devops.atlassian.net/wiki/home 
 
-# More Information
-For more information visit our other sections
 
 # Section	Description
 Process	Describes the companies process
@@ -59,12 +60,19 @@ Team Members Unavailable due to sickness or other commitments
 
 
 # Tenants of Design
-The code framework to be used will be <<>>, we will be programming using the IDE << >>
+The code framework to be used will be <<>>, we will be programming using the IDE Visual Studio
 
 # Security:
-- << >>: uses static analysis to find bugs in code. 
- 
-- <<>>.
+Security Testing:
+Test the system's login and authentication mechanisms to ensure that only authorized users can access the system.
+Test the system's response to SQL injection, cross-site scripting, and other common security vulnerabilities.
+Session based security (if the system does not recognise you as a user the ability to view information is restricted 
+Front end User validation (user details that do not exist restrict what pages are viewable) 
+Ports being locked down (can only access the system on a specific port e.g., 5000 
+AWS VPC 
+AWS security groups- within the VPC 
+AWS guard duty a threat detection service that continuously monitors for malicious activity and anomalous behaviour 
+AWS Sheild - defends against most common, frequently occurring network and transport layer DDoS attacks that target your website or applications 
 
 # Testing:
 Identify the Requirements and confirm they are Testable
@@ -74,6 +82,29 @@ Ensure admin can edit details –
 Ensure users that are not admin cannot edit details –
 Ensure grant applicant cannot change details once submitted
 Selenium is planned to be used for automated testing
+Functional Testing:
+Verify that the system allows end customers to create an account and log in with valid credentials.
+Test that end customers can submit their grant application details, including personal information and funding requirements.
+Verify that the system can map customer details to the appropriate grant and display available grants, including the Teto grant of up to €10,000.
+Test that the system provides a single box for special award applications and allows end customers to add additional funding requirements.
+Verify that the system prevents grant applicants from editing their application details once submitted.
+Test that the system allows administrators to access detailed information about grant applicants and edit as appropriate.
+Performance Testing:
+Test the system's response time and scalability by simulating a large number of grant applications and users.
+Verify that the system can handle high traffic and usage without significant delays or downtime.
+Compatibility Testing:
+Test the system's compatibility with different web browsers and devices, including desktop and mobile devices.
+Verify that the system displays correctly and functions properly on different screen sizes and resolutions.
+Regression Testing:
+Test the system after any updates or changes to ensure that it still functions as expected and that previous features remain intact.
+Usability Testing:
+Conduct usability testing to ensure that the system is user-friendly and meets the end customer's needs and expectations.
+Accessibility Testing:
+Test the system's accessibility features to ensure that it is compliant with accessibility standards and can be used by people with disabilities.
+Integration Testing:
+Test the system's integration with other applications and databases to ensure that it can communicate and exchange data correctly.
+Disaster Recovery and Business Continuity Testing:
+Test the system's backup and recovery mechanisms to ensure that it can recover from any data loss or system failure.
     
 # Environments:
     staging and production
