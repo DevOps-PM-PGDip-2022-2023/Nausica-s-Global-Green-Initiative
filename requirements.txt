@@ -1,8 +1,4 @@
 Flask==2.2.2
 Flask-Session==0.4.0
-pymongo==4.3.3
-psycopg2-binary==2.9.5
-Flask==2.2.2
-Flask-Session==0.4.0
-pymongo==4.3.3
-psycopg2-binary==2.9.5
+mysql.connector==2.2.9
+flask_swagger_ui==4.11.1
